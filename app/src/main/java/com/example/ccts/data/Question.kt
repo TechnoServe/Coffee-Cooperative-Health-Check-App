@@ -2,6 +2,7 @@ package com.example.ccts.data
 
 data class Question(
     val id: Int,
+    val categoryid:Int,
     val question: String,
     val type: String,
     val scorable: Boolean,

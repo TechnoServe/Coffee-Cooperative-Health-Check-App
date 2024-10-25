@@ -1,6 +1,7 @@
 package com.example.ccts
 
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,6 +20,10 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import androidx.room.Room
+import com.example.ccts.data.AppDatabase
+import com.example.ccts.data.Cooperative
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,6 +31,11 @@ fun RegisterCooperativeScreen(navController: NavHostController) {
     var name by remember { mutableStateOf(TextFieldValue()) }
     var ownerName by remember { mutableStateOf(TextFieldValue()) }
     var location by remember { mutableStateOf(TextFieldValue()) }
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+
+
 
     Scaffold(
         topBar = {
@@ -66,7 +77,7 @@ fun RegisterCooperativeScreen(navController: NavHostController) {
 
                 // Form Title
                 Text(
-                    text = "Register the Cooperative",
+                    text = "Add the Cooperative",
                     fontSize = 22.sp,
                     color = colorResource(id= R.color.turquoise),
                     fontWeight = FontWeight.Bold
@@ -89,7 +100,7 @@ fun RegisterCooperativeScreen(navController: NavHostController) {
                 TextField(
                     value = ownerName,
                     onValueChange = { ownerName = it },
-                    label = { Text("Owner Name") },
+                    label = { Text("Registered Number") },
                     modifier = Modifier.fillMaxWidth(),
                     colors = TextFieldDefaults.textFieldColors(containerColor = colorResource(id= R.color.grey))
                 )
@@ -109,14 +120,30 @@ fun RegisterCooperativeScreen(navController: NavHostController) {
 
                 // Register Button
                 Button(
-                    onClick = { /* Handle register action */ },
+                    onClick = {
+                        if (name.text.isNotBlank()&&ownerName.text.isNotBlank()&& location.text.isNotBlank()) {
+                            val db = AppDatabase.getDatabase(context)?.coopDao()
+                            coroutineScope.launch {
+                                val newCooperative = Cooperative(
+                                    name = name.text,
+                                    ownerName = ownerName.text,
+                                    location = location.text
+                                )
+                                db?.insertCooperative(newCooperative)
+                                Toast.makeText(context, "Cooperative registered successfully!", Toast.LENGTH_SHORT).show()
+                                navController.navigate("categories_health")
+                            }
+                        }else{
+                            Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
+                        }
+                    /* Handle register action */ },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),
                     shape = RoundedCornerShape(20.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(id= R.color.turquoise))
                 ) {
-                    Text(text = "Register", color = Color.White)
+                    Text(text = "Add", color = Color.White)
                 }
             }
         }

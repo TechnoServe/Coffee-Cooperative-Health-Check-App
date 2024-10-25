@@ -1,6 +1,10 @@
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
 }
 
 android {
@@ -44,7 +48,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
         }
     }
 }
@@ -65,6 +69,10 @@ dependencies {
     implementation ("androidx.compose.runtime:runtime-livedata:1.2.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation ("com.google.dagger:hilt-android:2.44")
+
+    kapt ("com.google.dagger:hilt-compiler:2.44")
+    implementation(libs.identity.jvm)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,4 +80,25 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Extensions = ViewModel + LiveData
+    val roomVersion = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+
+    implementation("androidx.room:room-ktx:$roomVersion")
+
+    implementation("androidx.room:room-rxjava2:$roomVersion")
+
+    implementation("androidx.room:room-rxjava3:$roomVersion")
+
+    implementation("androidx.room:room-guava:$roomVersion")
+
+    testImplementation("androidx.room:room-testing:$roomVersion")
+
+    implementation("androidx.room:room-paging:$roomVersion")
+
+
 }

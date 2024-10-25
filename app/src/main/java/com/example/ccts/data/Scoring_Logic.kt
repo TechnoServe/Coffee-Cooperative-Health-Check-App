@@ -1,6 +1,4 @@
-package com.example.ccts.adapter
-
-import com.example.ccts.data.Question
+package com.example.ccts.data
 
 fun scoreAnswer(question: Question, userAnswer: Any): Int {
     if (!question.scorable) return 0
