@@ -41,7 +41,7 @@ fun PopupActivity(navController: NavController, categoryId: Int) {
     val context = LocalContext.current
     val categories = loadCategoriesAndQuestion(context)
     val selectedCategory = categories.firstOrNull { it.id == categoryId }
-    var totalScore by remember { mutableStateOf(0) }
+    var totalScore by remember { mutableStateOf(0.00) }
     val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
 
     // Load saved answers when the component is first created

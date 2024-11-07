@@ -80,20 +80,37 @@ fun Categories_items(navController: NavHostController) {
     var usedToday by remember { mutableStateOf(false) }
     var totalScore by remember { mutableStateOf(0) }
     var maxScore by remember { mutableStateOf(100) } // Example maximum score
-    var scorePercentage by remember { mutableStateOf(0f) }
-    val totalQuestions = categories.sumBy { it.questions.size }
+    var scorePercentage by remember { mutableStateOf(0.00) }
+    var score by remember { mutableStateOf(0.00) }
+    var totalQuestions = 0.00
+
     var answeredQuestions by remember { mutableStateOf(0) }
 
 
     // Load categories once
     LaunchedEffect(Unit) {
         cooperatives = cooperativeDao?.getAllCooperative() ?: emptyList()
-
+        var totalWeight = 0.0
         // Load categories from JSON or another source for view mode
         categories.addAll(loadCategoriesAndQuestion(context))
         categories.forEach { category ->
             val categoryScore = calculateTotalScore(category, sharedPreferences)
-            scorePercentage += categoryScore
+
+
+            score += categoryScore
+             category.questions.forEach{question ->
+
+                 val questionWeight = question.weight.toDouble() ?: 0.0
+                 totalWeight += questionWeight
+
+
+
+                 scorePercentage = score/totalWeight
+
+             }
+
+
+
         }
     }
 
@@ -467,24 +484,11 @@ fun Categories_items(navController: NavHostController) {
 fun CategoryButton(category: Category, navController: NavHostController,hasAnswers: Boolean,enabled: Boolean = true) {
     val context = LocalContext.current
     val answers = remember { mutableStateMapOf<String, Any>() }
-    var categoryScore by remember { mutableStateOf(0) }
+
     val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
 
-    // Load answers and calculate category score
-    LaunchedEffect(Unit) {
-        category.questions?.forEach { question ->
-            val savedAnswer = getAnswerFromSharedPreferences(context, category.id, question)
-            answers.putAll(savedAnswer)
-        }
-        categoryScore = calculateTotalScore(category, sharedPreferences )
-    }
     val backgroundColor = if (hasAnswers) colorResource(id = R.color.turquoise) else Color.White
-    Text(
-        text = "Score: $categoryScore",
-        style = MaterialTheme.typography.bodyMedium,
-        color = Color.Blue,
-        modifier = Modifier.padding(4.dp)
-    )
+
     Column(
         modifier = Modifier
             .fillMaxWidth()

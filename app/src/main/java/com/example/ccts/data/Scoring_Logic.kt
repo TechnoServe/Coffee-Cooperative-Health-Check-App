@@ -57,8 +57,8 @@ fun calculateQuestionScore(question: Question, userAnswer: Any?): Int {
 
 
 
-fun calculateTotalScore(category: Category, sharedPreferences: SharedPreferences): Int {
-    var categoryScore = 0
+fun calculateTotalScore(category: Category, sharedPreferences: SharedPreferences): Double {
+    var categoryScore = 0.00
 
     category.questions.forEach { question ->
         val answerKey = "answer_${category.id}_${question.id}"

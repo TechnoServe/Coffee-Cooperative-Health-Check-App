@@ -11,6 +11,7 @@ data class Question(
     val lowerLength: Int? = null,
     val options: List<String>? = null,
     val correctAnswer: String? = null,
-    val correctAnswers: List<String>? = null
+    val correctAnswers: List<String>? = null,
+    val weight:Int
 
 )

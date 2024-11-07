@@ -14,7 +14,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
 
       {
@@ -27,7 +28,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 0
       },
       {
         "id": 3,
@@ -39,7 +41,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 0
       },
       {
         "id": 4,
@@ -51,7 +54,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 0
       },
       {
         "id": 5,
@@ -63,7 +67,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {
         "id": 6,
@@ -75,7 +80,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 0
       },
       {
         "id": 7,
@@ -87,7 +93,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 0
       }
     ]
   },
@@ -105,18 +112,20 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 9,
         "question": "Does the cooperative have a BOD committee?",
         "type": "yes_no",
-        "scorable": false,
+        "scorable": true,
         "maxScore": null,
         "minScore": null,
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
 
       {"id": 10,
@@ -128,7 +137,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 0
 
       },
       {"id": 11,
@@ -140,8 +150,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 0
 
       },
       {"id": 12,
@@ -153,7 +163,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 0
 
       },
       {"id": 13,
@@ -165,7 +176,8 @@
         "lowerLength":5,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
 
       },
       {"id": 14,
@@ -177,7 +189,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
 
       },
       {"id": 15,
@@ -188,7 +201,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers":null
+        "correctAnswers":null,
+        "weight": 0
 
       },
       {"id": 16,
@@ -200,18 +214,20 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 17,
         "question": "How many members does the supervisory committee have?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
+        "type": "number",
+        "scorable": true,
+        "maxScore": 20,
         "minScore": 3,
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
 
       },
 
@@ -224,7 +240,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
 
       }
 
@@ -244,19 +261,21 @@
         "minScore": 10,
         "lowerLength":null,
         "options": null,
-        "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 20,
         "question": "How many years has the Supervisory Committee Committee been in office?",
         "type": "number",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
+        "scorable": true,
+        "maxScore": 30,
+        "minScore": 10,
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
 
       }
 
@@ -277,7 +296,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 22,
         "question": "Are there records of the general BOD meetings?",
@@ -288,7 +308,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 23,
         "question": "Are there records of the general Supervisory meetings?",
@@ -299,7 +320,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 24,
         "question": "Does the cooperative have reports of the supervisory meetings?  ",
@@ -310,7 +332,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 25,
         "question": "Does the cooperative have reports from the supervisory committee?",
@@ -321,7 +344,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       }
 
 
@@ -341,7 +365,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 27,
         "question": "Does the cooperative have external audit reports for the last fiscal year?",
@@ -352,7 +377,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       }
 
 
@@ -373,7 +399,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       }
 
     ]
@@ -392,7 +419,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 30,
         "question": "Does the cooperative keep the records of its cash inflows and outflows?",
@@ -403,7 +431,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 31,
         "question": "Does the wet mill have records of famer deliveries ?",
@@ -414,7 +443,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       },
       {"id": 32,
         "question": "Does the cooperative have records of Coffee deliveries?",
@@ -425,8 +455,10 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
-      },{"id": 33,
+        "correctAnswers": null,
+        "weight": 1
+      },
+      {"id": 33,
         "question": "Does the cooperative have records of its assets and liabilities?",
         "type": "yes_no",
         "scorable":true,
@@ -435,7 +467,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": "yes",
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
       }
 
 
@@ -446,7 +479,7 @@
     "icon_path": "baseline_person_24",
     "category": "Financial",
     "questions": [
-      {"id": 28,
+      {"id": 34,
         "question": "What percentage of total revenue was paid to farmers in the most recent season?",
         "type": "percentage",
         "scorable": true,
@@ -455,7 +488,8 @@
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
-        "correctAnswers": null
+        "correctAnswers": null,
+        "weight": 1
 
       }
 
