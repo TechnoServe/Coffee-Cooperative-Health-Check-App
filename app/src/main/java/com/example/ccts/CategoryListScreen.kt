@@ -326,7 +326,7 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
 
                         Button(
                             onClick = {
-//                                val answersMap = sharedPreferences.all
+//                              val answersMap = sharedPreferences.all
                                 val answersMap = sharedPreferences.all.mapKeys { entry ->
                                     entry.key.split("_").last()
                                         .toString() // Extract questionId from key

@@ -25,6 +25,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+import com.example.ccts.data.calculateTotalScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -41,6 +42,7 @@ fun PopupActivity(navController: NavController, categoryId: Int) {
     val categories = loadCategoriesAndQuestion(context)
     val selectedCategory = categories.firstOrNull { it.id == categoryId }
     var totalScore by remember { mutableStateOf(0) }
+    val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
 
     // Load saved answers when the component is first created
     LaunchedEffect(Unit) {
@@ -51,6 +53,7 @@ fun PopupActivity(navController: NavController, categoryId: Int) {
                 answers.putAll(savedAnswer)
                 Log.d("LoadedAnswers", "Question ${question.id}: ${savedAnswer[question.id.toString()]}")
             }
+            totalScore = calculateTotalScore(selectedCategory, sharedPreferences)
         }
     }
 
@@ -101,7 +104,8 @@ fun PopupActivity(navController: NavController, categoryId: Int) {
                         Button(
                             onClick = {
                                 if (areAllQuestionsAnswered(categoryQuestions, answers)) {
-//                                    totalScore = calculateTotalScore(categoryQuestions, answers)
+
+                                    totalScore = calculateTotalScore(selectedCategory, sharedPreferences)
                                     coroutineScope.launch(Dispatchers.IO) {
                                         saveAnswersToSharedPreferences(context, selectedCategory, answers)
 
@@ -352,12 +356,26 @@ fun saveAnswersToSharedPreferences(context: Context, category: Category, answers
     category.questions.forEach { question ->
         val answer = answers[question.id.toString()]
         when (question.type) {
+
+
             "percentage" -> {
                 val percentageValue = (answer as? Float) ?: 50f
                 editor.putFloat("answer_${category.id}_${question.id}", percentageValue)
             }
+            "number" -> {
+            // Handle Int, Float, or Double as a Double type
+                val numberValue = when (answer) {
+                    is String ->answer.toDouble()
+                is Int -> answer.toDouble()
+                is Float -> answer.toDouble()
+                is Double -> answer
+                else -> 0.0 // Default value if it's not a valid number
+            }
+                Log.d("SaveAnswer", "Saving number value: ${numberValue::class.simpleName}")
+            editor.putString("answer_${category.id}_${question.id}", numberValue.toString()) // Save as String
+        }
             "checkbox" -> {
-                if (answer is Map<*, *>) {
+                if (answer is List<*>) {
                     val gson = Gson()
                     val jsonString = gson.toJson(answer)
                     editor.putString("answer_${category.id}_${question.id}", jsonString)
@@ -381,6 +399,14 @@ fun getAnswerFromSharedPreferences(context: Context, categoryId: Int, question: 
             // Retrieve percentage values saved as floats
             val savedValue = sharedPreferences.getFloat(answerKey, 50f)
             answersMap[question.id.toString()] = savedValue
+        }
+        "number" -> {
+            // Retrieve the saved value as String and convert to appropriate number type
+            val savedValueString = sharedPreferences.getString(answerKey, null)
+            if (!savedValueString.isNullOrEmpty()) {
+                val savedValue = savedValueString.toDoubleOrNull() ?: 0.0 // Convert to Double
+                answersMap[question.id.toString()] = savedValue
+            }
         }
         "checkbox" -> {
             // Retrieve and parse JSON strings for checkbox answers

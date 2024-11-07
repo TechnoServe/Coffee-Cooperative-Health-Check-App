@@ -10,6 +10,7 @@ data class Question(
     val minScore: Int? = null,
     val lowerLength: Int? = null,
     val options: List<String>? = null,
-    val correctAnswers: List<Any>,
+    val correctAnswer: String? = null,
+    val correctAnswers: List<String>? = null
 
 )

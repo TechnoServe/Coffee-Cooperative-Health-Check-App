@@ -13,7 +13,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
 
       {
@@ -25,7 +26,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
       },
       {
         "id": 3,
@@ -36,6 +38,7 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
+        "correctAnswer": null,
         "correctAnswers": null
       },
       {
@@ -47,18 +50,20 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
       },
       {
         "id": 5,
         "question": "What is the number of the current membership?",
         "type": "number",
         "scorable": true,
-        "maxScore": null,
-        "minScore": null,
+        "maxScore":40,
+        "minScore":10,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
       },
       {
         "id": 6,
@@ -69,7 +74,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
       },
       {
         "id": 7,
@@ -80,7 +86,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
       }
     ]
   },
@@ -97,8 +104,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 9,
         "question": "Does the cooperative have a BOD committee?",
@@ -108,8 +115,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
 
       {"id": 10,
@@ -120,7 +127,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
 
       },
       {"id": 11,
@@ -131,7 +139,9 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+
+        "correctAnswers": null
 
       },
       {"id": 12,
@@ -142,29 +152,32 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
 
       },
       {"id": 13,
         "question": "What percentage of the BOD members are Women?",
         "type": "text",
         "scorable": true,
-        "maxScore": null,
-        "minScore": 30,
-        "lowerLength":null,
+        "maxScore": 40,
+        "minScore": 20,
+        "lowerLength":5,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
 
       },
       {"id": 14,
         "question": "How often does the BOD Committee meet",
         "type": "number",
         "scorable": true,
-        "maxScore": null,
-        "minScore": null,
+        "maxScore": 30,
+        "minScore": 10,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
 
       },
       {"id": 15,
@@ -175,7 +188,7 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswers":null
 
       },
       {"id": 16,
@@ -186,8 +199,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 17,
         "question": "How many members does the supervisory committee have?",
@@ -197,6 +210,7 @@
         "minScore": 3,
         "lowerLength":null,
         "options": null,
+        "correctAnswer": null,
         "correctAnswers": null
 
       },
@@ -205,11 +219,12 @@
         "question": "How often does the supervisory committee meet?",
         "type": "number",
         "scorable": true,
-        "maxScore": null,
-        "minScore": null,
+        "maxScore": 30,
+        "minScore": 10,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
 
       }
 
@@ -225,12 +240,12 @@
         "question": "How many years has the BOD Committee been in office?",
         "type": "number",
         "scorable": true,
-        "maxScore": null,
-        "minScore": null,
+        "maxScore": 30,
+        "minScore": 10,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 20,
         "question": "How many years has the Supervisory Committee Committee been in office?",
@@ -240,7 +255,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null
 
       }
 
@@ -260,19 +276,19 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 22,
         "question": "Are there records of the general BOD meetings?",
         "type": "yes_no",
-        "scorable": false,
+        "scorable": true,
         "maxScore": null,
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 23,
         "question": "Are there records of the general Supervisory meetings?",
@@ -282,8 +298,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 24,
         "question": "Does the cooperative have reports of the supervisory meetings?  ",
@@ -293,8 +309,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 25,
         "question": "Does the cooperative have reports from the supervisory committee?",
@@ -304,8 +320,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       }
 
 
@@ -324,19 +340,19 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 27,
         "question": "Does the cooperative have external audit reports for the last fiscal year?",
         "type": "yes_no",
-        "scorable": false,
+        "scorable": true,
         "maxScore": null,
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       }
 
 
@@ -356,8 +372,8 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       }
 
     ]
@@ -375,55 +391,74 @@
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 30,
         "question": "Does the cooperative keep the records of its cash inflows and outflows?",
         "type": "yes_no",
-        "scorable": false,
+        "scorable": true,
         "maxScore": null,
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 31,
         "question": "Does the wet mill have records of famer deliveries ?",
         "type": "yes_no",
-        "scorable": false,
+        "scorable": true,
         "maxScore": null,
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },
       {"id": 32,
         "question": "Does the cooperative have records of Coffee deliveries?",
         "type": "yes_no",
-        "scorable": false,
+        "scorable": true,
         "maxScore": null,
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       },{"id": 33,
         "question": "Does the cooperative have records of its assets and liabilities?",
         "type": "yes_no",
-        "scorable": false,
+        "scorable":true,
         "maxScore": null,
         "minScore": null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null
       }
 
 
     ]
-  }
+  },
+  {
+    "id": 8,
+    "icon_path": "baseline_person_24",
+    "category": "Financial",
+    "questions": [
+      {"id": 28,
+        "question": "What percentage of total revenue was paid to farmers in the most recent season?",
+        "type": "percentage",
+        "scorable": true,
+        "maxScore": 40,
+        "minScore": 20,
+        "lowerLength":null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null
 
+      }
+
+    ]
+  }
 ]

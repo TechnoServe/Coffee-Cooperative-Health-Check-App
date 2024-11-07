@@ -38,6 +38,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -49,6 +50,7 @@ import com.example.ccts.data.Cooperative
 import com.example.ccts.data.Survey
 import com.example.ccts.data.SurveyCategory
 import com.example.ccts.data.SurveyQuestion
+import com.example.ccts.data.calculateTotalScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -76,6 +78,11 @@ fun Categories_items(navController: NavHostController) {
     val application = LocalContext.current.applicationContext as Application
     val viewModel: AnswersViewModel = viewModel(factory = AnswersViewModelFactory(application))
     var usedToday by remember { mutableStateOf(false) }
+    var totalScore by remember { mutableStateOf(0) }
+    var maxScore by remember { mutableStateOf(100) } // Example maximum score
+    var scorePercentage by remember { mutableStateOf(0f) }
+    val totalQuestions = categories.sumBy { it.questions.size }
+    var answeredQuestions by remember { mutableStateOf(0) }
 
 
     // Load categories once
@@ -84,7 +91,12 @@ fun Categories_items(navController: NavHostController) {
 
         // Load categories from JSON or another source for view mode
         categories.addAll(loadCategoriesAndQuestion(context))
+        categories.forEach { category ->
+            val categoryScore = calculateTotalScore(category, sharedPreferences)
+            scorePercentage += categoryScore
+        }
     }
+
 
         Scaffold(
         topBar = {
@@ -290,7 +302,7 @@ fun Categories_items(navController: NavHostController) {
                                 color = colorResource(id = R.color.turquoise),
                                 strokeWidth = 8.dp,
                             )
-                            Text(text = "70%", color = Color.Black, fontSize = 16.sp)
+                            Text(text = "${(scorePercentage * 100).toInt()}%", color = Color.Black, fontSize = 16.sp)
                         }
                     }
 
@@ -309,20 +321,7 @@ fun Categories_items(navController: NavHostController) {
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 } else {
-//                                    coroutineScope.launch(Dispatchers.IO) {
-//                                        val usedToday = surveyDao?.checkIfCooperativeUsedToday(
-//                                            selectedCooperative
-//                                        ) ?: 0
-//                                        if (usedToday > 0) {
-//                                            // Show a warning toast on the main thread
-//                                            withContext(Dispatchers.Main) {
-//                                                Toast.makeText(
-//                                                    context,
-//                                                    "This cooperative has already been used today. Please select another.",
-//                                                    Toast.LENGTH_SHORT
-//                                                ).show()
-//                                            }
-//                                        }else {
+
                                             val answersMap = sharedPreferences.all
                                             if (answersMap.isNotEmpty()) {
                                                 coroutineScope.launch(Dispatchers.IO) {
@@ -466,7 +465,26 @@ fun Categories_items(navController: NavHostController) {
 
 @Composable
 fun CategoryButton(category: Category, navController: NavHostController,hasAnswers: Boolean,enabled: Boolean = true) {
+    val context = LocalContext.current
+    val answers = remember { mutableStateMapOf<String, Any>() }
+    var categoryScore by remember { mutableStateOf(0) }
+    val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
+
+    // Load answers and calculate category score
+    LaunchedEffect(Unit) {
+        category.questions?.forEach { question ->
+            val savedAnswer = getAnswerFromSharedPreferences(context, category.id, question)
+            answers.putAll(savedAnswer)
+        }
+        categoryScore = calculateTotalScore(category, sharedPreferences )
+    }
     val backgroundColor = if (hasAnswers) colorResource(id = R.color.turquoise) else Color.White
+    Text(
+        text = "Score: $categoryScore",
+        style = MaterialTheme.typography.bodyMedium,
+        color = Color.Blue,
+        modifier = Modifier.padding(4.dp)
+    )
     Column(
         modifier = Modifier
             .fillMaxWidth()
