@@ -90,7 +90,7 @@ abstract class AppDatabase : RoomDatabase() {
             return Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
-                "ccts_db"
+                "ccts_db_v5"
             )
                 .allowMainThreadQueries()  // Use cautiously, ideally in background threads
                 .fallbackToDestructiveMigration()

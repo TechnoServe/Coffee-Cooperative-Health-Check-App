@@ -35,7 +35,7 @@ fun scoreAnswer(question: Question, userAnswer: Any): Int {
 
 //fun calculateTotalScore(questions: List<Question>, answers: Map<String, Any>): Int {
 //    var totalScore = 0
-//    for (question in questions) {
+//  for (question in questions) {
 //        val userAnswer = answers[question.id.toString()]
 //        if (userAnswer != null) {
 //            totalScore += scoreAnswer(question, userAnswer)
