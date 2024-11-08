@@ -3,10 +3,8 @@ package com.example.ccts
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
-import android.os.Build
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -30,20 +28,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -58,7 +54,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -67,24 +62,20 @@ import com.example.ccts.data.AnswersViewModel
 import com.example.ccts.data.AnswersViewModelFactory
 import com.example.ccts.data.AppDatabase
 import com.example.ccts.data.Category
+import com.example.ccts.data.CategoryDb
 import com.example.ccts.data.Cooperative
 import com.example.ccts.data.Survey
-import com.example.ccts.data.SurveyCategory
-import com.example.ccts.data.SurveyQuestion
+import com.example.ccts.data.calculateTotalScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.time.*
-import java.time.ZoneId
-import java.util.UUID
 
-@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewModel, survey: Survey) {
-    var respondentName by remember { mutableStateOf(TextFieldValue()) }
-    var selectedCooperative by remember { mutableStateOf("Select cooperative") }
-    var expanded by remember { mutableStateOf(false) }
+//    var respondentName by remember { mutableStateOf(TextFieldValue()) }
+//    var selectedCooperative by remember { mutableStateOf("Select cooperative") }
+//    var expanded by remember { mutableStateOf(false) }
     var cooperatives by remember { mutableStateOf(listOf<Cooperative>()) }
     val categories = remember { mutableStateListOf<Category>() }
 
@@ -92,19 +83,23 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val db = AppDatabase.getDatabase(context)?.coopDao()
-    val surveyDao = AppDatabase.getDatabase(context)?.surveyCategoryDao()
+    //val surveyDao = AppDatabase.getDatabase(context)?.surveyCategoryDao()
     val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
-    var showNameError by remember { mutableStateOf(false) }
+    // var showNameError by remember { mutableStateOf(false) }
     var submitEnabled by remember { mutableStateOf(sharedPreferences.all.isNotEmpty()) }
     val savedCategoryIds = sharedPreferences.all.keys.toSet()
-    val groupedAnswerId = UUID.randomUUID().toString()
+    // val groupedAnswerId = UUID.randomUUID().toString()
     val application = LocalContext.current.applicationContext as Application
     val viewModel: AnswersViewModel = viewModel(factory = AnswersViewModelFactory(application))
-    val categoriesList by viewModel.getCategoriesForSurvey(survey.surveyId).collectAsState(initial = emptyList())
-    val hasAnswersForSurvey by viewModel.getAnswersForSurvey(survey.surveyId).collectAsState(initial = emptyList())
-    val today = LocalDate.now()
-    // Convert survey timestamp to LocalDate
-    val surveyDate = Instant.ofEpochMilli(survey.timestamp).atZone(ZoneId.systemDefault()).toLocalDate()
+
+
+    val categoriesList by viewModel.allCategories.observeAsState(emptyList())
+
+
+    // val hasAnswersForSurvey by viewModel.getFullSurveyData(survey.surveyId).collectAsState(initial = emptyList())
+
+    // Transforming the list of answers into a set of question IDs for easy lookup
+    // val answeredQuestionIds = hasAnswersForSurvey.map { it.questions }.toSet()
 
 
     // Load categories once
@@ -147,118 +142,32 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
 
+                Text(
+                    text = "Respondent Name: ${survey.respondentName}",
+                    style = TextStyle(fontSize = 16.sp, color = Color.Black),
+                    modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp)
+
+                        .background(Color.LightGray),
+
+                    ) {
                     Text(
-                        text = "Respondent Name: ${survey.respondentName}",
+                        text = "Cooperative Name: ${survey.cooperativeName}",
                         style = TextStyle(fontSize = 16.sp, color = Color.Black),
-                        modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                        modifier = Modifier.padding(16.dp)
+
                     )
-
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(10.dp)
-
-                                        .background(Color.LightGray),
-
-                                ) {
-                                    Text(
-                                        text = "Cooperative Name: ${survey.cooperativeName}",
-                                        style = TextStyle(fontSize = 16.sp, color = Color.Black),
-                                        modifier = Modifier.padding(16.dp)
-
-                                    )
-                                }
-
-                    // Cooperative Name
-
-
-//                TextField(
-//                    value = respondentName,
-//                    onValueChange = { respondentName = it },
-//                    isError = respondentName.text.isBlank(),
-//                    label = { Text("Respondent Name") },
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(16.dp),
-//                    colors = TextFieldDefaults.textFieldColors(
-//                        cursorColor = Color.Black,
-//                        focusedLabelColor = colorResource(id = R.color.turquoise), // Label color when focused
-//                        unfocusedLabelColor = Color.Gray,    // Label color when not focused
-//                        focusedIndicatorColor = colorResource(id = R.color.turquoise), // Border color when focused
-//                        unfocusedIndicatorColor = Color.Gray // Border color when not focused
-//                    )
-//                )
-//                if (respondentName.text.isBlank()) {
-//                    Text("Please enter your name", color = Color.Red, fontSize = 12.sp , modifier = Modifier.padding(start = 16.dp))
-//                }
-
-//                Box {
-//                    Row(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(10.dp),
-//                        horizontalArrangement = Arrangement.spacedBy(16.dp)
-//                    ) {
-//                        Row(
-//                            modifier = Modifier
-//                                .width(300.dp)
-//                                .height(50.dp)
-//                                .background(Color.LightGray, RoundedCornerShape(8.dp))
-//                                .clickable { expanded = true },
-//                            verticalAlignment = Alignment.CenterVertically // Align the icon and text vertically
-//                        ) {
-//                            Text(
-//                                text = selectedCooperative,
-//                                modifier = Modifier
-//                                    .weight(1f),
-//                                color = Color.Black
-//                            )
-//                            Icon(
-//                                painter = painterResource(id = R.drawable.baseline_arrow_drop_down_24), // Use your icon here
-//                                contentDescription = "Dropdown Icon",
-//                                tint = Color.Black,
-//                                modifier = Modifier.size(24.dp) // Size for the icon
-//                            )
-//                        }
-//
-//
-//                        androidx.compose.material3.DropdownMenu(
-//                            expanded = expanded,
-//                            onDismissRequest = { expanded = false },
-//                            modifier = Modifier
-//                                .width(300.dp)
-//                                .padding(16.dp)
-//                        ) {
-//                            cooperatives.forEach { cooperative ->
-//                                DropdownMenuItem(
-//                                    onClick = {
-//                                        selectedCooperative = cooperative.name
-//                                        expanded = false
-//                                    }, text = { Text(text = cooperative.name) })
-//                            }
-//                        }
-//                        Button(
-//                            onClick = { navController.navigate("register_coffee")},
-//                            shape = RoundedCornerShape(12.dp),
-//                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.turquoise)),
-//                            modifier = Modifier.height(48.dp)
-//                        ) {
-//                            Icon(
-//                                painter = painterResource(id = R.drawable.baseline_add_24),
-//                                contentDescription = "Add New coperative",
-//                                tint = Color.White
-//                            )
-//
-//                        }
-//                    }
-//
-//                }
+                }
 
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2), // This specifies 2 buttons per row
                     contentPadding = PaddingValues(6.dp),
                     modifier = Modifier.weight(1f),
-//                        .padding(10.dp),
                     state = rememberLazyGridState(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -267,11 +176,11 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
                         val hasAnswersForCategory = viewModel.hasAnswersForCategory(survey.surveyId, category.categoryId).collectAsState(initial = false).value
 
                         val selectedCategory = categories.firstOrNull { it.id == category.categoryId }
-                       selectedCategory?.questions?.forEach{ question ->
+                        selectedCategory?.questions?.forEach{ question ->
                             val prefixedCategoryId = "answer_${category.categoryId}_${question.id}"
                             val hasDataInPreferences = sharedPreferences.contains(prefixedCategoryId)
-                           val hasAnswers = hasAnswersForCategory ||hasDataInPreferences
-                           Log.d("savedCategoryIds", "savedCategoryIds: ${savedCategoryIds}")
+                            val hasAnswers = hasAnswersForCategory ||hasDataInPreferences
+                            Log.d("savedCategoryIds", "savedCategoryIds: ${savedCategoryIds}")
                             CategoryButtonEdit(category, navController, survey.surveyId,hasAnswers)
                         }
 
@@ -317,59 +226,68 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
                                 color = colorResource(id = R.color.turquoise),
                                 strokeWidth = 8.dp,
                             )
-                            Text(text = "70%", color = Color.Black, fontSize = 16.sp)
+                            Text(text = survey.totalScore.toString(), color = Color.Black, fontSize = 16.sp)
                         }
                     }
-                    if (surveyDate.isEqual(today)) {
-                        Log.d("surveyDate", "surveyDate:$surveyDate ")
-                        Log.d("today", "today:$today ")
 
-                        Button(
-                            onClick = {
-//                                val answersMap = sharedPreferences.all
-                                val answersMap = sharedPreferences.all.mapKeys { entry ->
-                                    entry.key.split("_").last()
-                                        .toString() // Extract questionId from key
-                                }
-                                if (answersMap.isNotEmpty()) {
-                                    coroutineScope.launch(Dispatchers.IO) {
-                                        viewModel.upsertAnswer(answersMap)
+                    Button(
+                        onClick = {
+//                                val answersMap = sharedPreferences.all.mapKeys { entry ->
+//                                    Log.d("Entry", entry.toString())
+//                                    entry.key.split("_").last().toString() // Extract questionId from key
+//                                }
+                            val answersMap = sharedPreferences.all.mapKeys { entry ->
+                                Log.d("Entry", entry.toString())
 
+                                // Remove the "answer_" prefix and split by "_"
+                                val keyParts = entry.key.removePrefix("answer_").split("_")
 
-                                        // Clear shared preferences after saving answers
-                                        sharedPreferences.edit().clear().apply()
-
-                                        // Show success toast on the main thread
-                                        withContext(Dispatchers.Main) {
-                                            Toast.makeText(
-                                                context,
-                                                "Answers updated successfully",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            navController.navigate("cooperative_health")
-                                        }
-                                        submitEnabled = false
-                                    }
+                                // Check if key has both categoryId and questionId
+                                if (keyParts.size == 2) {
+                                    val categoryId = keyParts[0]
+                                    val questionId = keyParts[1]
+                                    "$categoryId $questionId"
                                 } else {
+                                    Log.e("answersMap", "Invalid key format: ${entry.key}")
+                                    entry.key // return the original key if format is invalid
+                                }
+                            }.mapValues { it.value.toString() } // Convert values to String if needed
+
+
+                            if (answersMap.isNotEmpty()) {
+                                coroutineScope.launch(Dispatchers.IO) {
+                                    Log.d("Update Answers", answersMap.toString())
+                                    viewModel.updateAnswers(answersMap,survey.surveyId)
+                                    // Clear shared preferences after saving answers
+                                    sharedPreferences.edit().clear().apply()
+
+                                    // Show success toast on the main thread
+                                    withContext(Dispatchers.Main) {
+                                        Toast.makeText(
+                                            context,
+                                            "Answers updated successfully",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                        navController.navigate("cooperative_health")
+                                    }
                                     submitEnabled = false
                                 }
+                            } else {
+                                submitEnabled = false
+                            }
 
-                            },
-                            enabled = submitEnabled,
-                            modifier = Modifier
-                                .height(50.dp)
-                                .width(150.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (submitEnabled) colorResource(id = R.color.turquoise) else Color.DarkGray,
-                                contentColor = Color.White
-                            )
-                        ) {
-                            Text(text = "Submit", color = Color.White)
-                        }
-                    } else {
-                        // Show alternative UI element when submit button shouldn't appear
-                        Text(text = "No submissions allowed", color = Color.Gray)
+                        },
+                        enabled = submitEnabled,
+                        modifier = Modifier
+                            .height(50.dp)
+                            .width(150.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (submitEnabled) colorResource(id = R.color.turquoise) else Color.DarkGray,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(text = "Submit", color = Color.White)
                     }
 
 
@@ -386,7 +304,7 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun CategoryButtonEdit(category: SurveyCategory, navController: NavHostController, surveyId: Int, hasAnswers:Boolean) {
+fun CategoryButtonEdit(category: CategoryDb, navController: NavHostController, surveyId: Int, hasAnswers:Boolean) {
     val backgroundColor = if (hasAnswers) colorResource(id = R.color.turquoise) else Color.White
     val context = LocalContext.current
     val jsonCategories = loadCategoriesAndQuestion(context)
@@ -412,17 +330,17 @@ fun CategoryButtonEdit(category: SurveyCategory, navController: NavHostControlle
             )
         } ?: 0
 
-            Icon(
-                painter = painterResource(id = resourceId),
-                contentDescription = "Add New cooperative",
-                tint = colorResource(id = R.color.black),
-                modifier = Modifier.padding(top = 30.dp)
-            )
+        Icon(
+            painter = painterResource(id = resourceId),
+            contentDescription = "Add New cooperative",
+            tint = colorResource(id = R.color.black),
+            modifier = Modifier.padding(top = 30.dp)
+        )
 
 
-            Text(text = category.categoryName, modifier = Modifier.padding(16.dp))
+        Text(text = category.name, modifier = Modifier.padding(16.dp))
 
-            ProgressedBarEdit()
+        ProgressedBarEdit()
 
     }
 }

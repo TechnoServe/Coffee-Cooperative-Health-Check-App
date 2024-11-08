@@ -2,35 +2,25 @@ package com.example.ccts
 
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.*
-import androidx.compose.ui.window.Dialog
-import com.example.ccts.data.Category
-import com.example.ccts.data.Question
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.ccts.data.AnswersViewModel
+import com.example.ccts.data.calculateTotalScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.io.IOException
 
 
 
@@ -51,7 +41,7 @@ fun CategoryDetailScreen(navController: NavHostController, viewModel: AnswersVie
 //        if (selectedCategory != null) {
 //
 //        }
-        viewModel.getAnswersForSurveyByCategory(surveyId, categoryId).collect { answerList ->
+        viewModel.getAnswersForCategory(surveyId, categoryId).collect { answerList ->
             answers.clear() // Clear existing answers
             answerList.forEach { answer ->
                 // Add to answers map
@@ -124,7 +114,7 @@ fun CategoryDetailScreen(navController: NavHostController, viewModel: AnswersVie
                         Button(
                             onClick = {
                                 if (areAllQuestionsAnswered(categoryQuestions, answers)) {
-//                                    totalScore = calculateTotalScore(categoryQuestions, answers)
+                                    totalScore = calculateTotalScore(categoryQuestions, answers)
                                     coroutineScope.launch(Dispatchers.IO) {
                                         saveAnswersToSharedPreferences(context, selectedCategory, answers)
 

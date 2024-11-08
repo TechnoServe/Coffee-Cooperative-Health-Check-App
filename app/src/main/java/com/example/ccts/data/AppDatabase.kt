@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import java.util.Date
 
 //@Database(entities = [Answers::class,  Cooperative::class,Survey::class], version = 18)
 //abstract class AppDatabase : RoomDatabase() {
@@ -42,11 +45,35 @@ import androidx.room.RoomDatabase
 //}
 
 
-@Database(entities = [Survey::class, SurveyCategory::class, SurveyQuestion::class, Cooperative::class], version = 19)
+class Converters {
+    @TypeConverter
+    fun fromTimestamp(value: Long?): Date? {
+        return value?.let { Date(it) }
+    }
+
+    @TypeConverter
+    fun dateToTimestamp(date: Date?): Long? {
+        return date?.time
+    }
+}
+
+@Database(
+    entities = [
+        Survey::class,
+        CategoryDb::class,
+        QuestionDb::class,
+        SurveyAnswer::class,
+        Cooperative::class
+    ],
+    version = 4,
+    exportSchema = true
+)
+@TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun surveyDao(): SurveyDao
-    abstract fun surveyCategoryDao(): SurveyCategoryDao
-    abstract fun surveyQuestionDao(): SurveyQuestionDao
+    abstract fun surveyCategoryDao(): CategoryDao
+    abstract fun surveyQuestionDao(): QuestionDao
+    abstract fun surveyAnswerDao(): SurveyAnswerDao
     abstract fun coopDao(): CooperativeDao
 
     companion object {

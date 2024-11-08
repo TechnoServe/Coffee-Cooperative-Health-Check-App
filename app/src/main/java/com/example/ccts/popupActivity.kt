@@ -8,7 +8,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.*
-import androidx.compose.ui.window.Dialog
 import com.example.ccts.data.Category
 import com.example.ccts.data.Question
 import com.google.gson.Gson
@@ -25,6 +24,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
+import com.example.ccts.data.calculateTotalScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -101,7 +101,7 @@ fun PopupActivity(navController: NavController, categoryId: Int) {
                         Button(
                             onClick = {
                                 if (areAllQuestionsAnswered(categoryQuestions, answers)) {
-//                                    totalScore = calculateTotalScore(categoryQuestions, answers)
+                                    totalScore = calculateTotalScore(categoryQuestions, answers)
                                     coroutineScope.launch(Dispatchers.IO) {
                                         saveAnswersToSharedPreferences(context, selectedCategory, answers)
 
@@ -322,29 +322,6 @@ fun CheckboxQuestion(question: Question, answers: MutableMap<String, Any>) {
     }
 }
 
-//fun saveAnswersToSharedPreferences(context: Context, question: Question, answer: Any?) {
-//    val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
-//    val editor = sharedPreferences.edit()
-//
-//    when (question.type) {
-//        "percentage" -> {
-//            val percentageValue = (answer as? Float) ?: 50f
-//            editor.putFloat(question.id.toString(), percentageValue)
-//        }
-//        "checkbox" -> {
-//            if (answer is Map<*, *>) {
-//                val gson = Gson()
-//                val jsonString = gson.toJson(answer)
-//                editor.putString(question.id.toString(), jsonString)
-//            }
-//        }
-//        else -> {
-//            editor.putString(question.id.toString(), answer?.toString() ?: "")
-//        }
-//    }
-//
-//    editor.apply()
-//}
 fun saveAnswersToSharedPreferences(context: Context, category: Category, answers: Map<String, Any?>) {
     val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
     val editor = sharedPreferences.edit()
@@ -407,40 +384,6 @@ fun getAnswerFromSharedPreferences(context: Context, categoryId: Int, question: 
 
     return answersMap
 }
-
-
-//fun getAnswerFromSharedPreferences(context: Context, question: Question): Map<String, Any> {
-//    val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
-//    val answersMap = mutableMapOf<String, Any>()
-//
-//    when (question.type) {
-//        "percentage" -> {
-//            val savedValue = sharedPreferences.getFloat(question.id.toString(), 50f)
-//            answersMap[question.id.toString()] = savedValue
-//        }
-//        "checkbox" -> {
-//            val jsonString = sharedPreferences.getString(question.id.toString(), null)
-//            if (jsonString != null) {
-//                val gson = Gson()
-//                val type = object : TypeToken<Map<String, Boolean>>() {}.type
-//                try {
-//                    val checkboxAnswers = gson.fromJson<Map<String, Boolean>>(jsonString, type)
-//                    answersMap[question.id.toString()] = checkboxAnswers
-//                } catch (e: Exception) {
-//                    Log.e("SharedPreferences", "Error parsing checkbox answers", e)
-//                }
-//            }
-//        }
-//        else -> {
-//            val savedAnswer = sharedPreferences.getString(question.id.toString(), "")
-//            if (!savedAnswer.isNullOrEmpty()) {
-//                answersMap[question.id.toString()] = savedAnswer
-//            }
-//        }
-//    }
-//
-//    return answersMap
-//}
 
 fun loadJsonFromAssets(context: Context, fileName: String): String? {
     return try {

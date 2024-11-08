@@ -1,6 +1,5 @@
 package com.example.ccts
 
-import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -37,22 +36,20 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.ccts.data.AnswersViewModel
-import com.example.ccts.data.AnswersViewModelFactory
 
 import com.example.ccts.data.AppDatabase
 import com.example.ccts.data.Cooperative
 import com.example.ccts.data.Survey
-import com.example.ccts.data.SurveyCategory
-import com.example.ccts.data.SurveyQuestion
+import com.example.ccts.data.CategoryDb
+import com.example.ccts.data.QuestionDb
+import com.example.ccts.data.SurveyAnswer
+import com.example.ccts.data.calculateTotalScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.UUID
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,16 +63,9 @@ fun Categories_items(navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val cooperativeDao = AppDatabase.getDatabase(context)?.coopDao()
-    val surveyDao = AppDatabase.getDatabase(context)?.surveyDao()
-    val surveyCategoryDao = AppDatabase.getDatabase(context)?.surveyCategoryDao()
     val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
-    var showNameError by remember { mutableStateOf(false) }
     var submitEnabled by remember { mutableStateOf(sharedPreferences.all.isNotEmpty()) }
     val savedCategoryIds = sharedPreferences.all.keys.toSet()
-    val groupedAnswerId = UUID.randomUUID().toString()
-    val application = LocalContext.current.applicationContext as Application
-    val viewModel: AnswersViewModel = viewModel(factory = AnswersViewModelFactory(application))
-    var usedToday by remember { mutableStateOf(false) }
 
 
     // Load categories once
@@ -86,7 +76,7 @@ fun Categories_items(navController: NavHostController) {
         categories.addAll(loadCategoriesAndQuestion(context))
     }
 
-        Scaffold(
+    Scaffold(
         topBar = {
             TopAppBar(
                 title = {
@@ -179,37 +169,7 @@ fun Categories_items(navController: NavHostController) {
                                     onClick = {
                                         selectedCooperative = cooperative.name
                                         expanded = false
-                                        coroutineScope.launch(Dispatchers.IO) {
-                                            val count = AppDatabase.getDatabase(context)?.surveyDao()?.checkIfCooperativeUsedToday(cooperative.name) ?: 0
-                                            withContext(Dispatchers.Main) {
-                                                usedToday = count > 0
-                                                if (usedToday) {
-                                                    // Display Toast
-                                                    Toast.makeText(
-                                                        context,
-                                                        "This cooperative has already been used today. Please select another.",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                }
-                                            }
-                                        }
-                                    }, text = { Row(verticalAlignment = Alignment.CenterVertically) {
-                                        Text(text = cooperative.name, color = Color.Black)
-                                        // Check if this cooperative has been used today and display the icon
-                                        if ((AppDatabase.getDatabase(context)?.surveyDao()
-                                                ?.checkIfCooperativeUsedToday(cooperative.name)
-                                                ?: 0) > 0
-                                        ) {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.baseline_warning_amber_24),
-                                                contentDescription = "Warning: Cooperative Used Today",
-                                                tint = Color.Red,
-                                                modifier = Modifier
-                                                    .size(18.dp)
-                                                    .padding(start = 8.dp)
-                                            )
-                                        }
-                                    } })
+                                    }, text = { Text(text = cooperative.name) })
                             }
                         }
                         Button(
@@ -233,7 +193,6 @@ fun Categories_items(navController: NavHostController) {
                     columns = GridCells.Fixed(2), // This specifies 2 buttons per row
                     contentPadding = PaddingValues(6.dp),
                     modifier = Modifier.weight(1f),
-//                        .padding(10.dp),
                     state = rememberLazyGridState(),
                     horizontalArrangement = Arrangement.spacedBy(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -248,7 +207,7 @@ fun Categories_items(navController: NavHostController) {
                                 "CategoryCheck",
                                 "Category ID: ${category.category}, Has Data: $hasDataInPreferences"
                             )
-                            CategoryButton(category = category, navController, hasDataInPreferences,enabled = !usedToday)
+                            CategoryButton(category = category, navController, hasDataInPreferences)
                         }
                     }
 
@@ -256,20 +215,20 @@ fun Categories_items(navController: NavHostController) {
                 }
 
 
-                    Spacer(modifier = Modifier.height(5.dp))
+                Spacer(modifier = Modifier.height(5.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+
+                        .padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
                     Row(
                         modifier = Modifier
-                            .fillMaxWidth()
-
-                            .padding(8.dp),
+                            .padding(16.dp),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Row(
-                            modifier = Modifier
-                                .padding(16.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
 
                         ) {
 
@@ -291,150 +250,120 @@ fun Categories_items(navController: NavHostController) {
                                 strokeWidth = 8.dp,
                             )
                             Text(text = "70%", color = Color.Black, fontSize = 16.sp)
+                            // Text(text = totalScore.toString(), color = Color.Black, fontSize = 16.sp)
                         }
                     }
 
-                        Button(
-                            onClick = {
-                                if (respondentName.text.isBlank()) {
-                                    Toast.makeText(
-                                        context,
-                                        "Please enter your name",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else if (selectedCooperative == "Select cooperative" || selectedCooperative.isEmpty()) {
-                                    Toast.makeText(
-                                        context,
-                                        "Please select a cooperative",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-//                                    coroutineScope.launch(Dispatchers.IO) {
-//                                        val usedToday = surveyDao?.checkIfCooperativeUsedToday(
-//                                            selectedCooperative
-//                                        ) ?: 0
-//                                        if (usedToday > 0) {
-//                                            // Show a warning toast on the main thread
-//                                            withContext(Dispatchers.Main) {
-//                                                Toast.makeText(
-//                                                    context,
-//                                                    "This cooperative has already been used today. Please select another.",
-//                                                    Toast.LENGTH_SHORT
-//                                                ).show()
-//                                            }
-//                                        }else {
-                                            val answersMap = sharedPreferences.all
-                                            if (answersMap.isNotEmpty()) {
-                                                coroutineScope.launch(Dispatchers.IO) {
+                    Button(
+                        onClick = {
+                            if (respondentName.text.isBlank()) {
+                                Toast.makeText(context, "Please enter your name", Toast.LENGTH_SHORT).show()
+                            } else if (selectedCooperative == "Select cooperative" || selectedCooperative.isEmpty()) {
+                                Toast.makeText(context, "Please select a cooperative", Toast.LENGTH_SHORT).show()
+                            } else {
+                                val answersMap = sharedPreferences.all
+                                if (answersMap.isNotEmpty()) {
+                                    coroutineScope.launch(Dispatchers.IO) {
+                                        try {
+                                            val db = AppDatabase.getDatabase(context)
 
-                                                    val db = AppDatabase.getDatabase(context)
-                                                    val surveyDao = db?.surveyDao()
-                                                    val categoryDao = db?.surveyCategoryDao()
-                                                    val questionDao = db?.surveyQuestionDao()
+                                            // 1. Load categories and questions from JSON
+                                            val jsonCategories = loadCategoriesAndQuestion(context)
+                                            val questions = jsonCategories.flatMap { it.questions }
 
+                                            // 2. Calculate the total score
+                                            val totalScore = calculateTotalScore(questions, answersMap)
 
-                                                    // 1. Insert a new survey and get the generated surveyId
-                                                    val surveyId = surveyDao?.insertSurvey(
-                                                        Survey(
-                                                            surveyTitle = "Survey to ${selectedCooperative}",
-                                                            respondentName = respondentName.text,
-                                                            cooperativeName = selectedCooperative,
-                                                            timestamp = System.currentTimeMillis()
+                                            // Check if questions and categories have already been loaded
+                                            if (db.surveyCategoryDao().getAllCategories().isEmpty()) {
+                                                // Load categories and questions from JSON if they are not already in the DB
+                                                val jsonCategories = loadCategoriesAndQuestion(context)
+                                                jsonCategories.forEach { jsonCategory ->
+                                                    // Insert category if it doesn't exist
+                                                    val categoryId = db.surveyCategoryDao().insertCategory(
+                                                        CategoryDb(name = jsonCategory.category)
+                                                    ).toInt()
+
+                                                    // Insert each question under the category
+                                                    jsonCategory.questions.forEach { jsonQuestion ->
+                                                        val question = QuestionDb(
+                                                            categoryId = categoryId,
+                                                            questionText = jsonQuestion.question
                                                         )
-                                                    )?.toInt() ?: 0
-
-                                                    // 2. Load categories and questions from JSON
-                                                    val jsonCategories =
-                                                        loadCategoriesAndQuestion(context)
-                                                    Log.d(
-                                                        "jsonCategories",
-                                                        "jsonCategories:$jsonCategories "
-                                                    )
-
-                                                    jsonCategories.forEach { jsonCategory ->
-                                                        Log.d(
-                                                            "SurveySubmission",
-                                                            "Respondent Name: ${respondentName.text}, Cooperative: $selectedCooperative"
-                                                        )
-
-                                                        // Insert the category and use the categoryId from JSON
-                                                        val categoryId =
-                                                            categoryDao?.insertCategory(
-                                                                SurveyCategory(
-                                                                    surveyId = surveyId,
-                                                                    categoryId = jsonCategory.id, // Use JSON's categoryId
-                                                                    categoryName = jsonCategory.category
-
-                                                                )
-                                                            )?.toInt()
-                                                                ?: jsonCategory.id // Fallback to JSON id
-
-                                                        jsonCategory.questions.forEach { jsonQuestion ->
-
-                                                            val answerKey =
-                                                                "answer_${jsonCategory.id}_${jsonQuestion.id}"
-                                                            val answerValue =
-                                                                answersMap[answerKey]?.toString()
-                                                                    ?: ""
-
-
-                                                            Log.d(
-                                                                "answerText",
-                                                                "answerText:$answerValue "
-                                                            )
-
-                                                            // Insert question with answer using JSON's questionId
-                                                            questionDao?.insertQuestion(
-                                                                SurveyQuestion(
-
-                                                                    surveyId = surveyId,
-                                                                    categoryId = categoryId,
-                                                                    questionId = jsonQuestion.id, // Use JSON's questionId
-                                                                    questionText = jsonQuestion.question,
-                                                                    answerText = answerValue ?: ""
-                                                                )
-                                                            )
-                                                        }
+                                                        db.surveyQuestionDao().insertQuestion(question)
                                                     }
-
-
-                                                    // Clear shared preferences after saving answers
-                                                    sharedPreferences.edit().clear().apply()
-
-                                                    // Show success toast on the main thread
-                                                    withContext(Dispatchers.Main) {
-                                                        Toast.makeText(
-                                                            context,
-                                                            "Answers saved successfully",
-                                                            Toast.LENGTH_SHORT
-                                                        ).show()
-                                                        navController.navigate("cooperative_health")
-                                                    }
-                                                    submitEnabled = false
                                                 }
-                                            } else {
-                                                submitEnabled = false
                                             }
-//                                        }
-//                                    }
+
+                                            // Create new survey
+                                            val surveyId = db.surveyDao().insertSurvey(
+                                                Survey(
+                                                    surveyTitle = "Survey to $selectedCooperative",
+                                                    respondentName = respondentName.text,
+                                                    cooperativeName = selectedCooperative,
+                                                    totalScore = totalScore,
+                                                    timestamp = System.currentTimeMillis()
+                                                )
+                                            ).toInt()
+
+                                            // Loop through categories and save answers
+                                            db.surveyCategoryDao().getAllCategories().forEach { category ->
+                                                val categoryId = category.categoryId
+
+                                                // Get all questions under this category
+                                                db.surveyQuestionDao().getQuestionsForCategory(categoryId).forEach { question ->
+                                                    val answerKey = "answer_${categoryId}_${question.questionId}"
+                                                    val answerText = answersMap[answerKey]?.toString() ?: ""
+
+                                                    // Only insert answer if it's not empty
+                                                    if (answerText.isNotEmpty()) {
+                                                        val answer = SurveyAnswer(
+                                                            surveyId = surveyId,
+                                                            questionId = question.questionId,
+                                                            //categoryId = categoryId,
+                                                            answerText = answerText
+                                                        )
+                                                        db.surveyAnswerDao().insertAnswer(answer)
+                                                    }
+                                                }
+                                            }
+
+                                            // Clear shared preferences after saving answers
+                                            sharedPreferences.edit().clear().apply()
+
+                                            // Show success toast on the main thread
+                                            withContext(Dispatchers.Main) {
+                                                Toast.makeText(context, "Survey submitted successfully", Toast.LENGTH_SHORT).show()
+                                                navController.navigate("cooperative_health")
+                                            }
+                                            submitEnabled = false
+
+                                        } catch (e: Exception) {
+                                            withContext(Dispatchers.Main) {
+                                                Toast.makeText(context, "Error saving survey: ${e.message}", Toast.LENGTH_LONG).show()
+                                            }
+                                            Log.e("SurveySubmission", "Error saving survey", e)
+                                        }
+                                    }
+                                } else {
+                                    submitEnabled = false
+                                    Toast.makeText(context, "No answers to submit", Toast.LENGTH_SHORT).show()
                                 }
-                            },
-                            enabled = submitEnabled && !usedToday,
-                            modifier = Modifier
-                                .height(50.dp)
-                                .width(150.dp),
-                            shape = RoundedCornerShape(10.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = if (submitEnabled && !usedToday) colorResource(id = R.color.turquoise) else Color.DarkGray,
-                                contentColor = Color.White
-                            )
-                        ) {
-                            Text(text = "Submit", color = Color.White)
-                        }
-
-
-
+                            }
+                        },
+                        enabled = submitEnabled,
+                        modifier = Modifier
+                            .height(50.dp)
+                            .width(150.dp),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (submitEnabled) colorResource(id = R.color.turquoise) else Color.DarkGray,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(text = "Submit", color = Color.White)
                     }
+                }
 
             }
         }
@@ -442,30 +371,9 @@ fun Categories_items(navController: NavHostController) {
 
 
 }
-//@Composable
-//fun CategoryButton(category: Category, navController: NavHostController) {
-//    Button(
-//        onClick = { navController.navigate("popup_coffee/${category.id}") },
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(8.dp)
-//            .height(200.dp)
-//            .background(colorResource(id = R.color.white), shape = RoundedCornerShape(8.dp)),
-//        colors= ButtonDefaults.buttonColors(colorResource(id = R.color.turquoise))
-//    ) {
-//        Column(
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center,
-//
-//        ) {
-//            Text(text = category.category, modifier = Modifier.padding(16.dp))
-//            ProgressedBar()
-//        }
-//    }
-//}
 
 @Composable
-fun CategoryButton(category: Category, navController: NavHostController,hasAnswers: Boolean,enabled: Boolean = true) {
+fun CategoryButton(category: Category, navController: NavHostController,hasAnswers: Boolean) {
     val backgroundColor = if (hasAnswers) colorResource(id = R.color.turquoise) else Color.White
     Column(
         modifier = Modifier
@@ -474,13 +382,9 @@ fun CategoryButton(category: Category, navController: NavHostController,hasAnswe
             .padding(6.dp)
             .background(backgroundColor, shape = RoundedCornerShape(10.dp))
             .border(1.dp, Color.Gray, shape = RoundedCornerShape(10.dp))
-            .clickable(enabled = enabled) { // Only navigate if the button is enabled
-                if (enabled) {
-                    // Navigate to the detailed view of the category
-                    navController.navigate("popup_coffee/${category.id}")
-                }
+            .clickable {
+                navController.navigate("popup_coffee/${category.id}")
             },
-
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {

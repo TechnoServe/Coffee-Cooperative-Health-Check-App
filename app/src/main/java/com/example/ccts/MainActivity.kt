@@ -6,6 +6,11 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -16,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.ccts.data.AnswersViewModel
 import com.example.ccts.data.AnswersViewModelFactory
+import com.example.ccts.data.Survey
 
 class MainActivity : ComponentActivity() {
 
@@ -67,13 +73,23 @@ fun NavigationSetup(navController: NavHostController, viewModel: AnswersViewMode
             arguments = listOf(navArgument("surveyId") { type = NavType.IntType })
         ) { backStackEntry ->
             val surveyId = backStackEntry.arguments?.getInt("surveyId")
-            if (surveyId != null) {
-                val survey = viewModel.getSurveyById(surveyId)
-                if (survey != null) {
-                    CategoryListScreen(navController, viewModel, survey) // Pass the Survey object
+
+            // State to hold the survey data
+            var survey by remember { mutableStateOf<Survey?>(null) }
+
+            // Launch a coroutine to fetch the survey data
+            LaunchedEffect(surveyId) {
+                if (surveyId != null) {
+                    survey = viewModel.getSurveyById(surveyId)
                 }
             }
+
+            // Only render the screen if survey data is available
+            survey?.let {
+                CategoryListScreen(navController, viewModel, it)
+            }
         }
+
         composable("category_detail/{surveyId}/{categoryId}", arguments = listOf(
             navArgument("surveyId") { type = NavType.IntType },
             navArgument("categoryId") { type = NavType.IntType }
