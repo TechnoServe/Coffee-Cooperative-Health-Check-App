@@ -3,8 +3,10 @@ package com.example.ccts
 import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
+import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -69,7 +71,11 @@ import com.example.ccts.data.calculateTotalScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.time.Instant
+import java.time.LocalDate
+import java.time.*
 
+@RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewModel, survey: Survey) {
@@ -91,9 +97,9 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
     // val groupedAnswerId = UUID.randomUUID().toString()
     val application = LocalContext.current.applicationContext as Application
     val viewModel: AnswersViewModel = viewModel(factory = AnswersViewModelFactory(application))
-
-
     val categoriesList by viewModel.allCategories.observeAsState(emptyList())
+    val today = LocalDate.now()
+    val surveyDate = Instant.ofEpochMilli(survey.timestamp).atZone(ZoneId.systemDefault()).toLocalDate()
 
 
     // val hasAnswersForSurvey by viewModel.getFullSurveyData(survey.surveyId).collectAsState(initial = emptyList())
@@ -226,10 +232,14 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
                                 color = colorResource(id = R.color.turquoise),
                                 strokeWidth = 8.dp,
                             )
-                            Text(text = survey.totalScore.toString(), color = Color.Black, fontSize = 16.sp)
+                            Text(
+                                text = survey.totalScore.toString(),
+                                color = Color.Black,
+                                fontSize = 16.sp
+                            )
                         }
                     }
-
+                    if(surveyDate.isEqual(today)){
                     Button(
                         onClick = {
 //                                val answersMap = sharedPreferences.all.mapKeys { entry ->
@@ -251,13 +261,14 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
                                     Log.e("answersMap", "Invalid key format: ${entry.key}")
                                     entry.key // return the original key if format is invalid
                                 }
-                            }.mapValues { it.value.toString() } // Convert values to String if needed
+                            }
+                                .mapValues { it.value.toString() } // Convert values to String if needed
 
 
                             if (answersMap.isNotEmpty()) {
                                 coroutineScope.launch(Dispatchers.IO) {
                                     Log.d("Update Answers", answersMap.toString())
-                                    viewModel.updateAnswers(answersMap,survey.surveyId)
+                                    viewModel.updateAnswers(answersMap, survey.surveyId)
                                     // Clear shared preferences after saving answers
                                     sharedPreferences.edit().clear().apply()
 
@@ -289,6 +300,7 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
                     ) {
                         Text(text = "Submit", color = Color.White)
                     }
+                }
 
 
 

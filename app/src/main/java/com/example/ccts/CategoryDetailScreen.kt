@@ -1,6 +1,7 @@
 package com.example.ccts
 
 
+import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.*
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.ui.Alignment
@@ -21,10 +23,10 @@ import com.example.ccts.data.AnswersViewModel
 import com.example.ccts.data.calculateTotalScore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.time.*
 
 
-
-
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CategoryDetailScreen(navController: NavHostController, viewModel: AnswersViewModel, surveyId: Int, categoryId: Int) {
     var showDialog by remember { mutableStateOf(true) }
@@ -34,13 +36,19 @@ fun CategoryDetailScreen(navController: NavHostController, viewModel: AnswersVie
     val categories = loadCategoriesAndQuestion(context)
     val selectedCategory = categories.firstOrNull { it.id == categoryId }
     var totalScore by remember { mutableStateOf(0) }
+    var isToday by remember { mutableStateOf(false) }
+
 
     LaunchedEffect(Unit) {
 
-        // Now load answers from SharedPreferences, which will override database answers if any
-//        if (selectedCategory != null) {
-//
-//        }
+        coroutineScope.launch(Dispatchers.IO) {
+            val survey = viewModel.getSurveyById(surveyId) // Get the survey directly
+            survey?.let {
+                // Convert timestamp to LocalDate
+                val surveyDate = Instant.ofEpochMilli(it.timestamp).atZone(ZoneId.systemDefault()).toLocalDate()
+                isToday = surveyDate.isEqual(LocalDate.now())
+            }
+        }
         viewModel.getAnswersForCategory(surveyId, categoryId).collect { answerList ->
             answers.clear() // Clear existing answers
             answerList.forEach { answer ->
@@ -110,13 +118,17 @@ fun CategoryDetailScreen(navController: NavHostController, viewModel: AnswersVie
                         } else {
                             Text("No questions available for this category.")
                         }
-
+                        if (isToday) {
                         Button(
                             onClick = {
                                 if (areAllQuestionsAnswered(categoryQuestions, answers)) {
                                     totalScore = calculateTotalScore(categoryQuestions, answers)
                                     coroutineScope.launch(Dispatchers.IO) {
-                                        saveAnswersToSharedPreferences(context, selectedCategory, answers)
+                                        saveAnswersToSharedPreferences(
+                                            context,
+                                            selectedCategory,
+                                            answers
+                                        )
 
 
                                     }
@@ -140,6 +152,7 @@ fun CategoryDetailScreen(navController: NavHostController, viewModel: AnswersVie
                         ) {
                             Text(text = "Save")
                         }
+                    }
                     }
                     IconButton(
                         onClick = {

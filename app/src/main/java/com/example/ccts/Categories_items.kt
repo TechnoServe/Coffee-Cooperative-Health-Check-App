@@ -66,6 +66,7 @@ fun Categories_items(navController: NavHostController) {
     val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
     var submitEnabled by remember { mutableStateOf(sharedPreferences.all.isNotEmpty()) }
     val savedCategoryIds = sharedPreferences.all.keys.toSet()
+    var usedToday by remember { mutableStateOf(false) }
 
 
     // Load categories once
@@ -169,7 +170,37 @@ fun Categories_items(navController: NavHostController) {
                                     onClick = {
                                         selectedCooperative = cooperative.name
                                         expanded = false
-                                    }, text = { Text(text = cooperative.name) })
+                                        coroutineScope.launch(Dispatchers.IO) {
+                                            val count = AppDatabase.getDatabase(context)?.surveyDao()?.checkIfCooperativeUsedToday(cooperative.name) ?: 0
+                                            withContext(Dispatchers.Main) {
+                                                usedToday = count > 0
+                                                if (usedToday) {
+                                                    // Display Toast
+                                                    Toast.makeText(
+                                                        context,
+                                                        "This cooperative has already been used today. Please select another.",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+                                            }
+                                        }
+                                    }, text = { Row(verticalAlignment = Alignment.CenterVertically) {
+                                        Text(text = cooperative.name, color = Color.Black)
+                                        // Check if this cooperative has been used today and display the icon
+                                        if ((AppDatabase.getDatabase(context)?.surveyDao()
+                                                ?.checkIfCooperativeUsedToday(cooperative.name)
+                                                ?: 0) > 0
+                                        ) {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.baseline_warning_amber_24),
+                                                contentDescription = "Warning: Cooperative Used Today",
+                                                tint = Color.Red,
+                                                modifier = Modifier
+                                                    .size(18.dp)
+                                                    .padding(start = 8.dp)
+                                            )
+                                        }
+                                    } })
                             }
                         }
                         Button(
@@ -207,7 +238,7 @@ fun Categories_items(navController: NavHostController) {
                                 "CategoryCheck",
                                 "Category ID: ${category.category}, Has Data: $hasDataInPreferences"
                             )
-                            CategoryButton(category = category, navController, hasDataInPreferences)
+                            CategoryButton(category = category, navController, hasDataInPreferences,enabled = !usedToday)
                         }
                     }
 
@@ -351,13 +382,13 @@ fun Categories_items(navController: NavHostController) {
                                 }
                             }
                         },
-                        enabled = submitEnabled,
+                        enabled = submitEnabled && !usedToday,
                         modifier = Modifier
                             .height(50.dp)
                             .width(150.dp),
                         shape = RoundedCornerShape(10.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = if (submitEnabled) colorResource(id = R.color.turquoise) else Color.DarkGray,
+                            containerColor = if (submitEnabled && !usedToday) colorResource(id = R.color.turquoise) else Color.DarkGray,
                             contentColor = Color.White
                         )
                     ) {
@@ -373,7 +404,7 @@ fun Categories_items(navController: NavHostController) {
 }
 
 @Composable
-fun CategoryButton(category: Category, navController: NavHostController,hasAnswers: Boolean) {
+fun CategoryButton(category: Category, navController: NavHostController,hasAnswers: Boolean,enabled: Boolean = true) {
     val backgroundColor = if (hasAnswers) colorResource(id = R.color.turquoise) else Color.White
     Column(
         modifier = Modifier
@@ -382,8 +413,11 @@ fun CategoryButton(category: Category, navController: NavHostController,hasAnswe
             .padding(6.dp)
             .background(backgroundColor, shape = RoundedCornerShape(10.dp))
             .border(1.dp, Color.Gray, shape = RoundedCornerShape(10.dp))
-            .clickable {
-                navController.navigate("popup_coffee/${category.id}")
+            .clickable(enabled = enabled) { // Only navigate if the button is enabled
+                if (enabled) {
+                    // Navigate to the detailed view of the category
+                    navController.navigate("popup_coffee/${category.id}")
+                }
             },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
