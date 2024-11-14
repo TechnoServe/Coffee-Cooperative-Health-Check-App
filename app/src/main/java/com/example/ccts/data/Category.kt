@@ -1,11 +1,9 @@
 package com.example.ccts.data
 
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-import androidx.room.Relation
 
 data class Category(
     val id: Int,
@@ -95,7 +93,7 @@ data class Survey(
     val surveyTitle: String,
     val respondentName:String,
     val cooperativeName: String,
-    val totalScore: Int,
+    val totalScore: Double,
     val timestamp: Long = System.currentTimeMillis()
 )
 

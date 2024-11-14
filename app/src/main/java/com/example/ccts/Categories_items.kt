@@ -67,14 +67,42 @@ fun Categories_items(navController: NavHostController) {
     var submitEnabled by remember { mutableStateOf(sharedPreferences.all.isNotEmpty()) }
     val savedCategoryIds = sharedPreferences.all.keys.toSet()
     var usedToday by remember { mutableStateOf(false) }
+    var scorePercentage by remember { mutableStateOf(0.00) }
+    var score by remember { mutableStateOf(0.00) }
+
+
 
 
     // Load categories once
     LaunchedEffect(Unit) {
-        cooperatives = cooperativeDao?.getAllCooperative() ?: emptyList()
 
+        cooperatives = cooperativeDao?.getAllCooperative() ?: emptyList()
+        val answersMap = sharedPreferences.all
+        answersMap.forEach { (key, value) ->
+            Log.d("SharedPreferences Key", "Key: $key, Value: $value")
+        }
+        var totalWeight = 0.0
         // Load categories from JSON or another source for view mode
+        categories.clear()
         categories.addAll(loadCategoriesAndQuestion(context))
+            categories.forEach { category ->
+                val categoryScore = calculateTotalScore(category, sharedPreferences)
+
+
+                score += categoryScore
+                category.questions.forEach { question ->
+
+                    val questionWeight = question.weight.toDouble() ?: 0.0
+                    totalWeight += questionWeight
+
+
+
+                    scorePercentage = score / totalWeight
+
+                }
+
+
+        }
     }
 
     Scaffold(
@@ -280,7 +308,7 @@ fun Categories_items(navController: NavHostController) {
                                 color = colorResource(id = R.color.turquoise),
                                 strokeWidth = 8.dp,
                             )
-                            Text(text = "70%", color = Color.Black, fontSize = 16.sp)
+                            Text(text = "${(scorePercentage * 100).toInt()}%", color = Color.Black, fontSize = 16.sp)
                             // Text(text = totalScore.toString(), color = Color.Black, fontSize = 16.sp)
                         }
                     }
@@ -301,9 +329,8 @@ fun Categories_items(navController: NavHostController) {
                                             // 1. Load categories and questions from JSON
                                             val jsonCategories = loadCategoriesAndQuestion(context)
                                             val questions = jsonCategories.flatMap { it.questions }
-
                                             // 2. Calculate the total score
-                                            val totalScore = calculateTotalScore(questions, answersMap)
+                                            val totalScore= scorePercentage
 
                                             // Check if questions and categories have already been loaded
                                             if (db.surveyCategoryDao().getAllCategories().isEmpty()) {

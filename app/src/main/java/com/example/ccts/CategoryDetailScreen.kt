@@ -1,6 +1,7 @@
 package com.example.ccts
 
 
+import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -34,9 +35,13 @@ fun CategoryDetailScreen(navController: NavHostController, viewModel: AnswersVie
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
     val categories = loadCategoriesAndQuestion(context)
-    val selectedCategory = categories.firstOrNull { it.id == categoryId }
-    var totalScore by remember { mutableStateOf(0) }
+    val selectedCategory = categories.first { it.id == categoryId }
+    var totalScore by remember { mutableStateOf(0.00) }
     var isToday by remember { mutableStateOf(false) }
+    val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
+
+
+
 
 
     LaunchedEffect(Unit) {
@@ -49,27 +54,51 @@ fun CategoryDetailScreen(navController: NavHostController, viewModel: AnswersVie
                 isToday = surveyDate.isEqual(LocalDate.now())
             }
         }
+
+
         viewModel.getAnswersForCategory(surveyId, categoryId).collect { answerList ->
             answers.clear() // Clear existing answers
             answerList.forEach { answer ->
                 // Add to answers map
                 answers[answer.questionId.toString()] = answer.answerText ?: ""
-                // Save each answer to SharedPreferences
-                if (selectedCategory != null) {
-                    selectedCategory.questions?.forEach { question ->
-                        val savedAnswer = getAnswerFromSharedPreferences(context, selectedCategory.id, question)
-                        if (savedAnswer.isNotEmpty()) {
-                            answers.putAll(savedAnswer)
-                            Log.d("SharedPrefDebug", "Overridden with SharedPreferences: $answers")
-                        } else {
-                            Log.d("SharedPrefDebug", "No data found in SharedPreferences for question ${question.id}")
-                        }
-                    }
+                saveAnswersToSharedPreferences(
+                    context,
+                    selectedCategory,
+                    answers
+                )
 
+
+
+                // Save each answer to SharedPreferences
+
+
+                selectedCategory.questions?.forEach { question ->
+//                        val savedAnswer = sharedPreferences.getString("answer_${categoryId}_${question.id}", "") ?: ""
+//                        Log.d("PopupDialog", "Saved answer in dialog: $savedAnswer")
+
+                    val savedAnswer = getAnswerFromSharedPreferences(context, selectedCategory.id, question)
+
+
+
+//                        Log.d("From shared","ansers from shared $savedAnswer")
+
+                    if (savedAnswer.isNotEmpty()) {
+
+                        answers[question.id.toString()] = savedAnswer
+                        answers.putAll(savedAnswer)
+
+                        Log.d("SharedPrefDebug", "Overridden with SharedPreferences: $answers")
+                    } else {
+                        Log.d("SharedPrefDebug", "No data found in SharedPreferences for question ${question.id}")
+                    }
                 }
+
+                totalScore = calculateTotalScore(selectedCategory, sharedPreferences)
             }
+
             Log.d("DatabaseDebug", "Loaded from database: $answers")
         }
+
 
     }
 
@@ -122,7 +151,7 @@ fun CategoryDetailScreen(navController: NavHostController, viewModel: AnswersVie
                         Button(
                             onClick = {
                                 if (areAllQuestionsAnswered(categoryQuestions, answers)) {
-                                    totalScore = calculateTotalScore(categoryQuestions, answers)
+                                    totalScore = calculateTotalScore(selectedCategory, sharedPreferences)
                                     coroutineScope.launch(Dispatchers.IO) {
                                         saveAnswersToSharedPreferences(
                                             context,

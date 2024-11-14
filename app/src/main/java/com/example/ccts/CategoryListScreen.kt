@@ -100,6 +100,10 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
     val categoriesList by viewModel.allCategories.observeAsState(emptyList())
     val today = LocalDate.now()
     val surveyDate = Instant.ofEpochMilli(survey.timestamp).atZone(ZoneId.systemDefault()).toLocalDate()
+    var scorePercentage by remember { mutableStateOf("") }
+    var score by remember { mutableStateOf(0.00) }
+    var isInitialLoad by remember { mutableStateOf(true) }
+
 
 
     // val hasAnswersForSurvey by viewModel.getFullSurveyData(survey.surveyId).collectAsState(initial = emptyList())
@@ -110,10 +114,59 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
 
     // Load categories once
     LaunchedEffect(Unit) {
+
         cooperatives = db?.getAllCooperative() ?: emptyList()
+        val answersMap = sharedPreferences.all
+        var totalWeight=0.0
+        var scores=0.0
 
         // Load categories from JSON or another source for view mode
         categories.addAll(loadCategoriesAndQuestion(context))
+
+
+        sharedPreferences.all.forEach { (key, value) ->
+            Log.d("SharedPreferences", "Key: $key, Value: $value")
+        }
+
+
+        if (answersMap.isNotEmpty()) {
+            categoriesList.forEach { category ->
+                val selectedCategory = categories.firstOrNull { it.id == category.categoryId }
+
+                val categoryScore = selectedCategory?.let { calculateTotalScore(it, sharedPreferences) }
+                Log.d("categoryScore", "categoryScore:$categoryScore ")
+
+
+                if (categoryScore != null) {
+                    score += categoryScore
+                }
+                selectedCategory?.questions?.forEach { question ->
+
+                    val savedAnswer=  getAnswerFromSharedPreferences(context, selectedCategory.id, question)
+                    Log.d("From shared","ansers from shared $savedAnswer")
+
+
+                    val questionWeight = question.weight.toDouble() ?: 0.0
+                    totalWeight += questionWeight
+                    scores = (score / totalWeight) * 100
+
+
+
+
+                }
+
+            }
+
+            scorePercentage= scores.toString()
+
+
+
+        } else {
+
+            val  scores= survey.totalScore*100
+            scorePercentage = scores.toString()
+        }
+
     }
 
     Scaffold(
@@ -232,75 +285,86 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
                                 color = colorResource(id = R.color.turquoise),
                                 strokeWidth = 8.dp,
                             )
+
                             Text(
-                                text = survey.totalScore.toString(),
+
+                                text = "$scorePercentage %",
                                 color = Color.Black,
                                 fontSize = 16.sp
                             )
+
                         }
                     }
                     if(surveyDate.isEqual(today)){
-                    Button(
-                        onClick = {
+                        Button(
+                            onClick = {
 //                                val answersMap = sharedPreferences.all.mapKeys { entry ->
 //                                    Log.d("Entry", entry.toString())
 //                                    entry.key.split("_").last().toString() // Extract questionId from key
 //                                }
                             val answersMap = sharedPreferences.all.mapKeys { entry ->
-                                Log.d("Entry", entry.toString())
-
-                                // Remove the "answer_" prefix and split by "_"
-                                val keyParts = entry.key.removePrefix("answer_").split("_")
-
-                                // Check if key has both categoryId and questionId
-                                if (keyParts.size == 2) {
-                                    val categoryId = keyParts[0]
-                                    val questionId = keyParts[1]
-                                    "$categoryId $questionId"
-                                } else {
-                                    Log.e("answersMap", "Invalid key format: ${entry.key}")
-                                    entry.key // return the original key if format is invalid
-                                }
+                            val keyParts = entry.key.split("_")
+                            if (keyParts.size >= 3) {
+                                "${keyParts[1]}_${keyParts[2]}" // Assuming "answer_categoryId_questionId"
+                            } else {
+                                entry.key
                             }
-                                .mapValues { it.value.toString() } // Convert values to String if needed
+                        }
+//                                val answersMap = sharedPreferences.all.mapKeys { entry ->
+//                                    Log.d("Entry", entry.toString())
+//
+//                                    // Remove the "answer_" prefix and split by "_"
+//                                    val keyParts = entry.key.removePrefix("answer_").split("_")
+//
+//                                    // Check if key has both categoryId and questionId
+//                                    if (keyParts.size == 2) {
+//                                        val categoryId = keyParts[0]
+//                                        val questionId = keyParts[1]
+//                                        "$categoryId $questionId"
+//                                    } else {
+//                                        Log.e("answersMap", "Invalid key format: ${entry.key}")
+//                                        entry.key // return the original key if format is invalid
+//                                    }
+//                                }
+//                                    .mapValues { it.value.toString() } // Convert values to String if needed
 
 
-                            if (answersMap.isNotEmpty()) {
-                                coroutineScope.launch(Dispatchers.IO) {
-                                    Log.d("Update Answers", answersMap.toString())
-                                    viewModel.updateAnswers(answersMap, survey.surveyId)
-                                    // Clear shared preferences after saving answers
-                                    sharedPreferences.edit().clear().apply()
+                                if (answersMap.isNotEmpty()) {
+                                    coroutineScope.launch(Dispatchers.IO) {
+                                        Log.d("Update Answers", answersMap.toString())
+                                        viewModel.updateAnswers(answersMap, survey.surveyId)
+                                        // Clear shared preferences after saving answers
+                                        sharedPreferences.edit().clear().apply()
 
-                                    // Show success toast on the main thread
-                                    withContext(Dispatchers.Main) {
-                                        Toast.makeText(
-                                            context,
-                                            "Answers updated successfully",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        navController.navigate("cooperative_health")
+                                        // Show success toast on the main thread
+                                        withContext(Dispatchers.Main) {
+                                            Toast.makeText(
+                                                context,
+                                                "Answers updated successfully",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            navController.navigate("cooperative_health")
+                                        }
+                                        submitEnabled = false
                                     }
+                                } else {
                                     submitEnabled = false
                                 }
-                            } else {
-                                submitEnabled = false
-                            }
 
-                        },
-                        enabled = submitEnabled,
-                        modifier = Modifier
-                            .height(50.dp)
-                            .width(150.dp),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (submitEnabled) colorResource(id = R.color.turquoise) else Color.DarkGray,
-                            contentColor = Color.White
-                        )
-                    ) {
-                        Text(text = "Submit", color = Color.White)
+                            },
+                            enabled = submitEnabled,
+                            modifier = Modifier
+                                .height(50.dp)
+                                .width(150.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = if (submitEnabled) colorResource(id = R.color.turquoise) else Color.DarkGray,
+                                contentColor = Color.White
+                            )
+                        ) {
+                            Text(text = "Submit", color = Color.White)
+                        }
                     }
-                }
 
 
 

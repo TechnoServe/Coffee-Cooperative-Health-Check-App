@@ -40,7 +40,8 @@ fun PopupActivity(navController: NavController, categoryId: Int) {
     val context = LocalContext.current
     val categories = loadCategoriesAndQuestion(context)
     val selectedCategory = categories.firstOrNull { it.id == categoryId }
-    var totalScore by remember { mutableStateOf(0) }
+    var totalScore by remember { mutableStateOf(0.00) }
+    val sharedPreferences = context.getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
 
     // Load saved answers when the component is first created
     LaunchedEffect(Unit) {
@@ -51,6 +52,7 @@ fun PopupActivity(navController: NavController, categoryId: Int) {
                 answers.putAll(savedAnswer)
                 Log.d("LoadedAnswers", "Question ${question.id}: ${savedAnswer[question.id.toString()]}")
             }
+            totalScore = calculateTotalScore(selectedCategory, sharedPreferences)
         }
     }
 
@@ -101,7 +103,7 @@ fun PopupActivity(navController: NavController, categoryId: Int) {
                         Button(
                             onClick = {
                                 if (areAllQuestionsAnswered(categoryQuestions, answers)) {
-                                    totalScore = calculateTotalScore(categoryQuestions, answers)
+                                    totalScore = calculateTotalScore(selectedCategory, sharedPreferences)
                                     coroutineScope.launch(Dispatchers.IO) {
                                         saveAnswersToSharedPreferences(context, selectedCategory, answers)
 
@@ -329,7 +331,7 @@ fun saveAnswersToSharedPreferences(context: Context, category: Category, answers
     category.questions.forEach { question ->
         val answer = answers[question.id.toString()]
         when (question.type) {
-            "percentage" -> {
+            "percentage","number" -> {
                 val percentageValue = (answer as? Float) ?: 50f
                 editor.putFloat("answer_${category.id}_${question.id}", percentageValue)
             }
@@ -354,7 +356,7 @@ fun getAnswerFromSharedPreferences(context: Context, categoryId: Int, question: 
     val answerKey = "answer_${categoryId}_${question.id}" // Updated key format
 
     when (question.type) {
-        "percentage" -> {
+        "percentage","number" -> {
             // Retrieve percentage values saved as floats
             val savedValue = sharedPreferences.getFloat(answerKey, 50f)
             answersMap[question.id.toString()] = savedValue
