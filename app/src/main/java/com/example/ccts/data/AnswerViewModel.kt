@@ -103,7 +103,7 @@ class AnswersViewModel(application: Application) : AndroidViewModel(application)
 
                 try {
                     // Attempt to parse questionId and categoryId
-                    val (questionId,categoryId)= key.split(" ")
+                    val (categoryId,questionId)= key.split("_")
                     Log.d("Update Details", "Question Id: $questionId, Category Id: $categoryId in Survey $surveyId")
                     val answer = SurveyAnswer(
                         surveyId = surveyId,

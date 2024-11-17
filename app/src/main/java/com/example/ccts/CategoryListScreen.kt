@@ -131,26 +131,22 @@ fun CategoryListScreen(navController: NavHostController, viewModel: AnswersViewM
 
         if (answersMap.isNotEmpty()) {
             categoriesList.forEach { category ->
-                val selectedCategory = categories.firstOrNull { it.id == category.categoryId }
+                val selectedCategory = categories.first { it.id == category.categoryId }
 
-                val categoryScore = selectedCategory?.let { calculateTotalScore(it, sharedPreferences) }
+                val categoryScore = selectedCategory.let { calculateTotalScore(it, sharedPreferences) }
                 Log.d("categoryScore", "categoryScore:$categoryScore ")
 
 
-                if (categoryScore != null) {
-                    score += categoryScore
-                }
-                selectedCategory?.questions?.forEach { question ->
+                score += categoryScore
+                selectedCategory.questions.forEach { question ->
 
-                    val savedAnswer=  getAnswerFromSharedPreferences(context, selectedCategory.id, question)
-                    Log.d("From shared","ansers from shared $savedAnswer")
+//                    val savedAnswer=  getAnswerFromSharedPreferences(context, selectedCategory.id, question)
+//                    Log.d("From shared","ansers from shared $savedAnswer")
 
 
                     val questionWeight = question.weight.toDouble() ?: 0.0
                     totalWeight += questionWeight
                     scores = (score / totalWeight) * 100
-
-
 
 
                 }

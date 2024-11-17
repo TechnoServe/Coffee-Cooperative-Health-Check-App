@@ -62,8 +62,8 @@
         "question": "What is the number of the current membership?",
         "type": "number",
         "scorable": true,
-        "maxScore":40,
-        "minScore":10,
+        "maxScore":null,
+        "minScore":null,
         "lowerLength":null,
         "options": null,
         "correctAnswer": null,
@@ -304,7 +304,7 @@
     "icon_path": "baseline_person_24",
     "category": "Record Keeping",
     "questions": [
-      {"id": 26,
+      {"id": 22,
         "question": "Does the cooperative have financial reports for the last fiscal year?",
         "type": "yes_no",
         "scorable": true,
@@ -316,7 +316,7 @@
         "correctAnswers": null,
         "weight": 1
       },
-      {"id": 27,
+      {"id": 23,
         "question": "Does the cooperative have external audit reports for the last fiscal year?",
         "type": "yes_no",
         "scorable": true,
@@ -328,7 +328,7 @@
         "correctAnswers": null,
         "weight": 1
       },
-      {"id": 27,
+      {"id": 24,
         "question": "Does the cooperative have a record of all their legal documents?",
         "type": "yes_no",
         "scorable": true,
@@ -350,7 +350,7 @@
     "icon_path": "baseline_person_24",
     "category": "Executive Organ",
     "questions": [
-      {"id": 28,
+      {"id": 25,
         "question": "Do the cooperative employees have written contracts in accordance with cooperative & Labour laws?",
         "type": "yes_no",
         "scorable": true,
@@ -370,7 +370,7 @@
     "icon_path": "baseline_person_24",
     "category": "Accounting System",
     "questions": [
-      {"id": 29,
+      {"id": 26,
         "question": "Does the cooperative have a book-keeping system in place?",
         "type": "yes_no",
         "scorable": true,
@@ -391,7 +391,7 @@
     "icon_path": "baseline_person_24",
     "category": "Financial",
     "questions": [
-      {"id": 34,
+      {"id": 27,
         "question": "What percentage of total revenue was paid to farmers in the most recent season?",
         "type": "percentage",
         "scorable": true,

@@ -48,7 +48,7 @@ fun PopupActivity(navController: NavController, categoryId: Int) {
         if (selectedCategory != null) {
             selectedCategory.questions?.forEach { question ->
                 val savedAnswer = getAnswerFromSharedPreferences(context, selectedCategory.id, question)
-                Log.d("From shared","ansers from shared $savedAnswer")
+                Log.d("From shared","anserssss from shared $savedAnswer")
                 answers.putAll(savedAnswer)
                 Log.d("LoadedAnswers", "Question ${question.id}: ${savedAnswer[question.id.toString()]}")
             }
@@ -331,7 +331,7 @@ fun saveAnswersToSharedPreferences(context: Context, category: Category, answers
     category.questions.forEach { question ->
         val answer = answers[question.id.toString()]
         when (question.type) {
-            "percentage","number" -> {
+            "percentage" -> {
                 val percentageValue = (answer as? Float) ?: 50f
                 editor.putFloat("answer_${category.id}_${question.id}", percentageValue)
             }
@@ -356,9 +356,9 @@ fun getAnswerFromSharedPreferences(context: Context, categoryId: Int, question: 
     val answerKey = "answer_${categoryId}_${question.id}" // Updated key format
 
     when (question.type) {
-        "percentage","number" -> {
+        "percentage" -> {
             // Retrieve percentage values saved as floats
-            val savedValue = sharedPreferences.getFloat(answerKey, 50f)
+            val savedValue = sharedPreferences.getFloat(answerKey, 0f)
             answersMap[question.id.toString()] = savedValue
         }
         "checkbox" -> {

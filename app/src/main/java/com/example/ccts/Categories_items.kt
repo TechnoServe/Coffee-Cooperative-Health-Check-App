@@ -321,6 +321,7 @@ fun Categories_items(navController: NavHostController) {
                                 Toast.makeText(context, "Please select a cooperative", Toast.LENGTH_SHORT).show()
                             } else {
                                 val answersMap = sharedPreferences.all
+                                Log.d("answer map","$answersMap")
                                 if (answersMap.isNotEmpty()) {
                                     coroutineScope.launch(Dispatchers.IO) {
                                         try {

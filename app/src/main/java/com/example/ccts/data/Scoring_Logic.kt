@@ -30,9 +30,9 @@ fun calculateQuestionScore(question: Question, userAnswer: Any?, answersMap: Map
 
             Log.d("previousAnswerDouble", "previousAnswerDouble:$previousAnswerDouble ")
             if (question.id == 5 && previousAnswerDouble != null && previousAnswerDouble < userAnswerInt) {
-                1 // Score 1 if the previous answer is less than the current answer
+                return 1 // Score 1 if the previous answer is less than the current answer
             }
-            if (question.id == 11) {
+           else  if  (question.id == 11) {
                 val answer11 = (answersMap[11] as? String)?.toDoubleOrNull() ?: return 0
                 if (answer11 >= min && (answer11 % 2) != 0.0) {
                     Log.d("AnswerCheck", "Answer for question 11 is odd and greater than 5: $answer11")
@@ -42,8 +42,9 @@ fun calculateQuestionScore(question: Question, userAnswer: Any?, answersMap: Map
                 }
             }
             else if (userAnswerInt >= min) {
-                1
                 Log.d("AnswerChec", "Answer for question 11 is odd and greater than 5: $userAnswerInt")
+              return   1
+
             }
 
 
@@ -87,7 +88,7 @@ fun calculateTotalScore(category: Category, sharedPreferences: SharedPreferences
     category.questions.forEach { question ->
         val answerKey = "answer_${category.id}_${question.id}"
         val answerValue: Any? = when (question.type) {
-            "percentage","number" -> sharedPreferences.getFloat(answerKey, -1f).takeIf { it >= 0 }
+            "percentage" -> sharedPreferences.getFloat(answerKey, -1f).takeIf { it >= 0 }
             "checkbox" -> {
                 val jsonString = sharedPreferences.getString(answerKey, null)
                 jsonString?.let {
@@ -95,7 +96,6 @@ fun calculateTotalScore(category: Category, sharedPreferences: SharedPreferences
                 }
 
             }
-
             else -> sharedPreferences.getString(answerKey, null)
         }
         answersMap[question.id] = answerValue
