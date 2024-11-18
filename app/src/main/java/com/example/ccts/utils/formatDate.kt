@@ -27,6 +27,7 @@ fun isTodayDate(dateStr: String): Boolean {
 
     return formattedDateStr == todayStr
 }
+
 @SuppressLint("SimpleDateFormat")
 fun getCurrentDateFormatted(): String {
     val currentDate = Date()

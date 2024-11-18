@@ -1,21 +1,21 @@
 package com.example.ccts
 
-import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
@@ -25,10 +25,11 @@ import com.example.ccts.data.Survey
 
 class MainActivity : ComponentActivity() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        val sharedPreferences = getSharedPreferences("SurveyAnswers", Context.MODE_PRIVATE)
+        val sharedPreferences = getSharedPreferences("SurveyAnswers", MODE_PRIVATE)
         sharedPreferences.edit().clear().apply()
         enableEdgeToEdge()
         setContent {
@@ -36,17 +37,17 @@ class MainActivity : ComponentActivity() {
             val viewModel: AnswersViewModel =
                 viewModel(factory = AnswersViewModelFactory(application)) // You can provide a factory if needed
             NavigationSetup(navController = navController, viewModel = viewModel)
-
-
         }
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationSetup(navController: NavHostController, viewModel: AnswersViewModel) {
     NavHost(
         navController = navController,
-        startDestination = "home") {
+        startDestination = "home"
+    ) {
         // Splash screen route
 //        composable("splash") {
 //            SplashScreen(navController = navController)
@@ -56,17 +57,25 @@ fun NavigationSetup(navController: NavHostController, viewModel: AnswersViewMode
             CoffeLandingScreen(navController = navController)
         }
         composable("cooperative_health") {
-            DisplayAllCooperativeHealth(navController = navController) }
-        composable("categories_health") {backStackEntry ->
+            DisplayAllCooperativeHealth(navController = navController)
+        }
+        composable("categories_health") { backStackEntry ->
             val surveyId = backStackEntry.arguments?.getString("surveyId")?.toIntOrNull() ?: 0
             Categories_items(
                 navController = navController,
 
-                ) }
+                )
+        }
         composable("register_coffee") { RegisterCooperativeScreen(navController = navController) }
         composable("popup_coffee/{categoryId}") { backStackEntry ->
             val categoryId = backStackEntry.arguments?.getString("categoryId")?.toIntOrNull() ?: 0
-            PopupActivity(navController = navController,categoryId = categoryId) }
+            PopupActivity(
+                navController = navController,
+                categoryId = categoryId,
+                {},
+                mutableMapOf()
+            )
+        }
 
         composable(
             "category_list/{surveyId}",
@@ -89,16 +98,6 @@ fun NavigationSetup(navController: NavHostController, viewModel: AnswersViewMode
                 CategoryListScreen(navController, viewModel, it)
             }
         }
-
-        composable("category_detail/{surveyId}/{categoryId}", arguments = listOf(
-            navArgument("surveyId") { type = NavType.IntType },
-            navArgument("categoryId") { type = NavType.IntType }
-        )) { backStackEntry ->
-            val surveyId = backStackEntry.arguments?.getInt("surveyId") ?: return@composable
-            val categoryId = backStackEntry.arguments?.getInt("categoryId") ?: return@composable
-            CategoryDetailScreen(navController = navController,viewModel, surveyId, categoryId)
-        }
-
 
     }
 }

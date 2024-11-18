@@ -47,7 +47,6 @@ import kotlinx.coroutines.flow.Flow
 //}
 
 
-
 //@Dao
 //interface SurveyQuestionDao {
 //    @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -72,6 +71,9 @@ interface CategoryDao {
     // Changed Flow<List<CategoryDb>> to List<CategoryDb> for one-time check
     @Query("SELECT * FROM categories")
     suspend fun getAllCategories(): List<CategoryDb>
+    // New method to get a category by name
+    @Query("SELECT * FROM categories WHERE name = :name LIMIT 1")
+    suspend fun getCategoryByName(name: String): CategoryDb?
 
 }
 
@@ -87,6 +89,9 @@ interface QuestionDao {
     // New function to retrieve a question by its questionId
     @Query("SELECT * FROM questions WHERE questionId = :questionId LIMIT 1")
     suspend fun getQuestionById(questionId: Int): QuestionDb?
+
+    @Query("SELECT * FROM questions WHERE questionText = :text AND categoryId = :categoryId LIMIT 1")
+    suspend fun getQuestionByTextAndCategory(text: String, categoryId: Int): QuestionDb?
 }
 
 
@@ -103,6 +108,9 @@ interface SurveyDao {
 
     @Query("SELECT COUNT(*) FROM surveys WHERE cooperativeName = :cooperativeName AND DATE(timestamp / 1000, 'unixepoch') = DATE('now')")
     fun checkIfCooperativeUsedToday(cooperativeName: String): Int
+
+    @Query("UPDATE surveys SET totalScore = :newScore WHERE surveyId = :surveyId")
+    suspend fun updateSurveyScore(surveyId: Int, newScore: Double)
 
 }
 
@@ -132,23 +140,31 @@ interface SurveyAnswerDao {
     }
 
     // Updated query to get all answers for a survey (no category filter needed)
-    @Query("""
+    @Query(
+        """
         SELECT * FROM survey_answers 
         WHERE surveyId = :surveyId
-    """)
+    """
+    )
     fun getAnswersForSurvey(surveyId: Int): Flow<List<SurveyAnswer>>
 
     // Check if there are any answers in a survey for a specific question
-    @Query("""
+    @Query(
+        """
         SELECT COUNT(*) > 0 
         FROM survey_answers 
         WHERE surveyId = :surveyId AND questionId = :questionId 
         AND answerText IS NOT NULL AND answerText != ''
-    """)
+    """
+    )
     fun hasAnswerForQuestion(surveyId: Int, questionId: Int): Flow<Boolean>
 
+    @Query("SELECT * FROM survey_answers WHERE surveyId = :surveyId AND answerText IS NOT NULL")
+    suspend fun getAnswersWithNonNullText(surveyId: Int): List<SurveyAnswer>
+
     // Get completion status for each category in a survey, based on question relationships
-    @Query("""
+    @Query(
+        """
         SELECT c.categoryId, c.name, 
         (SELECT COUNT(*) FROM survey_answers sa 
          INNER JOIN questions q ON sa.questionId = q.questionId
@@ -157,7 +173,8 @@ interface SurveyAnswerDao {
          AND sa.answerText IS NOT NULL 
          AND sa.answerText != '') > 0 as isCompleted
         FROM categories c
-    """)
+    """
+    )
     fun getCategoryCompletionStatus(surveyId: Int): Flow<List<CategoryStatus>>
 }
 

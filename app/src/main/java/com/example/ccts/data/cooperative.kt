@@ -8,5 +8,5 @@ data class Cooperative(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val name: String,
     val ownerName: String,
-    val location:String
+    val location: String
 )

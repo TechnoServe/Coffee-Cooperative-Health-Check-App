@@ -1,8 +1,6 @@
 package com.example.ccts
 
 
-import android.graphics.Paint.Align
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
@@ -37,36 +35,35 @@ fun CoffeLandingScreen(navController: NavHostController) {
     var selectedLanguage by remember {
         mutableStateOf("English")
     }
-    val languages= listOf("English","Kinyarwanda")
+    val languages = listOf("English", "Kinyarwanda")
     var isVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         isVisible = true
     }
     Box(
         modifier = Modifier.fillMaxSize()
-
     ) {
-
         Image(
-            painter = painterResource(id = R.drawable.landing_background),
+            painter = painterResource(id = R.drawable.img_4),
             contentDescription = "Coffee background",
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
         )
         DropdownMenu(
-            selectedLanguage=selectedLanguage,
-            onLanguageSelected = { selectedLanguage= it},
-            languages=languages
+            selectedLanguage = selectedLanguage,
+            onLanguageSelected = { selectedLanguage = it },
+            languages = languages
         )
 
-            androidx.compose.animation.AnimatedVisibility(
-                visible= isVisible,
-                enter=fadeIn(),
-                exit= fadeOut(),
-                modifier= Modifier.padding(top=200.dp)
+        androidx.compose.animation.AnimatedVisibility(
+            visible = isVisible,
+            enter = fadeIn(),
+            exit = fadeOut(),
+            modifier = Modifier.padding(top = 200.dp)
 
-            ){
-                Box ( modifier = Modifier
+        ) {
+            Box(
+                modifier = Modifier
                     .fillMaxWidth() // Makes the box take full width
                     .padding(horizontal = 16.dp)
                     .clip(RoundedCornerShape(16.dp))
@@ -74,45 +71,49 @@ fun CoffeLandingScreen(navController: NavHostController) {
 
                     .padding(16.dp),
 
-                    contentAlignment = Alignment.Center,
+                contentAlignment = Alignment.Center,
 
-                    ){
+                ) {
 
-                    BasicText(
-                        text= "Welcome to the Coffee Cooperative Tracking System",
+                BasicText(
+                    text = "Welcome to the Coffee Cooperative Tracking System",
 
-                        style= TextStyle(
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                            color= Color.White,
-                        ),
-                        modifier = Modifier.padding(16.dp)
+                    style = TextStyle(
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                    ),
+                    modifier = Modifier.padding(16.dp)
 
 
-
-                    )
-                }
-
+                )
             }
 
+        }
 
-            Button(
-                onClick = {
-                    navController.navigate("cooperative_health")
-                },
-                shape= RoundedCornerShape(20.dp),
-                colors = ButtonDefaults.buttonColors(colorResource(id= R.color.turquoise)),
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .width(150.dp)
-                    . height(50.dp)
-            ) {
-                Text(text="Get Started", color= Color.White, style= TextStyle( fontSize = 16.sp, fontWeight= FontWeight.Bold))
-            }
+
+        Button(
+            onClick = {
+                navController.navigate("cooperative_health")
+            },
+            shape = RoundedCornerShape(20.dp),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.turquoise)),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .width(150.dp)
+                .height(50.dp)
+        ) {
+            Text(
+                text = "Get Started",
+                color = Color.White,
+                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            )
+        }
 
 
     }
 }
+
 @Composable
 fun DropdownMenu(
     selectedLanguage: String,
@@ -121,58 +122,58 @@ fun DropdownMenu(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Box (
+    Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(10.dp)
-            .padding(top = 8.dp)
-            ,
+            .padding(top = 8.dp),
 
-    ){
+        ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
 
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(16.dp)
-                .background(Color.White,shape = RoundedCornerShape(4.dp))
+                .background(Color.White, shape = RoundedCornerShape(4.dp))
                 .clickable { expanded = true }
                 .padding(8.dp)
 
-        ){
+        ) {
             Icon(
-                painter= painterResource(id= R.drawable.baseline_language_24),
+                painter = painterResource(id = R.drawable.baseline_language_24),
                 contentDescription = "Language Icon",
                 modifier = Modifier.size(24.dp),
-                tint= Color.Black,
+                tint = Color.Black,
 
-            )
+                )
             Spacer(modifier = Modifier.width(8.dp))
 
-                Text(
-                    text = selectedLanguage,
-                    modifier = Modifier
-                        .clickable { expanded = true }
-                        .background(Color.White)
-                        .padding(16.dp),
-                    style = TextStyle(
-                        color= Color.Black
-                    )
+            Text(
+                text = selectedLanguage,
+                modifier = Modifier
+                    .clickable { expanded = true }
+                    .background(Color.White)
+                    .padding(16.dp),
+                style = TextStyle(
+                    color = Color.Black
                 )
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    languages.forEach { language ->
-                        DropdownMenuItem(onClick = {
-                            onLanguageSelected(language)
-                            expanded = false
-                        },text={Text(text = language)
-                        })
-                    }
+            )
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                languages.forEach { language ->
+                    DropdownMenuItem(onClick = {
+                        onLanguageSelected(language)
+                        expanded = false
+                    }, text = {
+                        Text(text = language)
+                    })
                 }
             }
         }
     }
+}
 
 

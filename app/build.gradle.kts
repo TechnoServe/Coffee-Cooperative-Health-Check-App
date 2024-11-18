@@ -39,6 +39,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += "-Xopt-in=kotlin.contracts.ExperimentalContracts"
     }
     buildFeatures {
         compose = true
@@ -65,6 +66,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
+    implementation("com.opencsv:opencsv:5.6")
+    implementation ("androidx.activity:activity-ktx:1.7.0")
+    implementation ("androidx.activity:activity:1.7.0")
     implementation ("com.google.code.gson:gson:2.8.2")
     implementation ("androidx.compose.runtime:runtime-livedata:1.2.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")

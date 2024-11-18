@@ -87,11 +87,12 @@ data class QuestionDb(
     val categoryId: Int,
     val questionText: String,
 )
+
 @Entity(tableName = "surveys")
 data class Survey(
     @PrimaryKey(autoGenerate = true) val surveyId: Int = 0,
     val surveyTitle: String,
-    val respondentName:String,
+    val respondentName: String,
     val cooperativeName: String,
     val totalScore: Double,
     val timestamp: Long = System.currentTimeMillis()
@@ -113,11 +114,11 @@ data class Survey(
     ],
     indices = [
         Index(value = ["surveyId", "questionId"], unique = true),
+        Index(value = ["questionId"])
     ]
 )
 data class SurveyAnswer(
-    @PrimaryKey(autoGenerate = true)
-    val answerId: Int = 0,
+    @PrimaryKey(autoGenerate = true) val answerId: Int = 0,
     val surveyId: Int,
     val questionId: Int,
     val answerText: String?,

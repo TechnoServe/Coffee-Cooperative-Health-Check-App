@@ -63,9 +63,9 @@ class Converters {
         CategoryDb::class,
         QuestionDb::class,
         SurveyAnswer::class,
-        Cooperative::class
+        Cooperative::class,
     ],
-    version = 5,
+    version = 6,
     exportSchema = true
 )
 @TypeConverters(Converters::class)
