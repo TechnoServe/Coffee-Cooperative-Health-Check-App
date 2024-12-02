@@ -5,18 +5,20 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     id ("dagger.hilt.android.plugin")
+
+
 }
 
 android {
-    namespace = "com.example.ccts"
+    namespace = "com.technoserve.cooptrac"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.ccts"
+        applicationId = "com.technoserve.cooptrac"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 20
+        versionName = "6.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -26,7 +28,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -74,6 +76,9 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
     implementation ("com.google.dagger:hilt-android:2.44")
+    implementation ("androidx.compose.ui:ui:1.4.0")
+    implementation ("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.compose.foundation:foundation-layout:1.0.5")
 
     kapt ("com.google.dagger:hilt-compiler:2.44")
     implementation(libs.identity.jvm)
