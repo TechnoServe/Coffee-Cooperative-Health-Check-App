@@ -26,6 +26,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "CCTS"
+rootProject.name = "CoopTrac"
 include(":app")
  

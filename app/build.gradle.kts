@@ -5,17 +5,19 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     id ("dagger.hilt.android.plugin")
+
+
 }
 
 android {
-    namespace = "com.example.ccts"
+    namespace = "com.technoserve.cooptrac"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.ccts"
+        applicationId = "com.technoserve.cooptrac"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 10
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -26,7 +28,6 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

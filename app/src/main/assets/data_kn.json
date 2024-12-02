@@ -1,0 +1,513 @@
+[
+  {
+    "id": 1,
+    "icon_path": "baseline_person_24",
+    "category": " Amakuru y'ibanze",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Ese koperative ifite ubuzima gatozi?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza koo koperativwe if ubuzima gatozi",
+        "weight": 5
+      },
+      {
+        "id": 2,
+        "question": "Ni ayahe mazina ya perezida wa koperative?",
+        "type": "text",
+        "scorable": false,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswers": null,
+        "weight": 0
+      },
+      {
+        "id": 3,
+        "question": "Ni iyihe nomero ya telefone ya perezida wa koperative?",
+        "type": "text",
+        "scorable": false,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswers": null,
+        "weight": 0
+      },
+
+      {
+        "id": 4,
+        "question": "Koperative yatangiranye n'abanyamuryango ba abagabo bangahe ?",
+        "type": "number",
+        "scorable": false,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
+      },
+      {
+        "id": 5,
+        "question": "Koperative yatangiranye n'abanyamuryango ba abagore bangahe ?",
+        "type": "number",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko Koperative yatangiranye n'abanyamuryango ba abagore byibuze 30% byabanyamuryango bose",
+        "weight": 1
+      },
+      {
+        "id": 6,
+        "question": "Koperative yatangiranye n'abanyamuryango bangahe?",
+        "type": "number",
+        "scorable": false,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
+      },
+
+      {
+        "id": 7,
+        "question": "Ese ubu koperative igizwe n'abanyamuryango ba ngahe ba abagabo?",
+        "type": "number",
+        "scorable": false,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
+      },
+      {
+        "id": 8,
+        "question": "Ese ubu koperative igizwe n'abanyamuryango ba ngahe ba abagore?",
+        "type": "number",
+        "scorable":true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko abagore babanyamuryango bafite byibuze 30% byabanyamuryango bose",
+        "weight": 1
+      },
+      {
+        "id": 9,
+        "question": "Ese ubu koperative igizwe n'abanyamuryango ba ngahe?",
+        "type": "number",
+        "scorable": true,
+        "maxScore":null,
+        "minScore":null,
+        "lowerLength":null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko abanyamuryango bariho ubu barenze cyangwa bangana abanyamuryango ba mbere.",
+        "weight": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "icon_path": "baseline_person_24",
+    "category": "Imiyoborere ya Koperative",
+    "questions": [
+      {
+        "id": 10,
+        "question": "Mwaba mwarakoze inama rusange muri werurwe na Ugushyingo ?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko koperative ikora inama zinteko rusange muri Werurwe & Ukwakira.",
+        "weight": 5
+      },
+      {
+        "id": 11,
+        "question": "Haba hari ishusho y'umutungo(imari) yagaragajwe mu nama yo muri werurwe?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko ishusho y'umutungo(imari) yagaragajwe mu nama yo muri Werurwe.",
+        "weight": 5
+      },
+      {
+        "id": 12,
+        "question": "Ese mufite inyandiko mvugo z'inama zose zabaye za koperative?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko inyandiko zabitswe.",
+        "weight": 5
+      },
+      {
+        "id": 13,
+        "question": "Koperative ifite komite y'inama y'ubutegetsi?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko ufite Inama y'Ubutegetsi.",
+        "weight": 5
+      },
+      {
+        "id": 14,
+        "question": "Komite y'inama y'ubutegitsi igizwe n'abanyamuryango bangahe ba abagabo?",
+        "type": "number",
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
+        "scorable": false,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
+      },
+      {
+        "id": 15,
+        "question": "Komite y'inama y'ubutegitsi igizwe n'abanyamuryango bangahe  ba abagore?",
+        "type": "number",
+
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
+        "scorable": false,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
+      },
+      {
+        "id": 16,
+        "question": "Komite y'inama y'ubutegitsi igizwe n'abanyamuryango bangahe ?",
+        "type": "number",
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
+        "scorable": true,
+        "maxScore": null,
+        "minScore": 5,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko komite y'Inama y'Ubuyobozi iruta cyangwa ingana na 5 kandi igomba kuba umubare utagabanyika na kabiri ",
+        "weight": 4
+      },
+      {
+        "id": 17,
+        "question": "Mu bagize inama y'ubutegetsi, abagore ni bangahe ku ijana?",
+        "type": "percentage",
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
+        "scorable": true,
+        "maxScore": null,
+        "minScore": 30,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko abagore bagize Inama y'ubutegetsi nibura 30% Mu bagize inama y'ubutegetsi",
+        "weight": 1
+      },
+      {
+        "id": 18,
+        "question": "Komite y'inama y'ubutegetsi iterana kangahe mu mwaka?",
+        "type": "number",
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
+        "scorable": true,
+        "maxScore": null,
+        "minScore": 4,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko  y'inama y'ubutegetsi iterana byibuze rimwe mu gihembwe, mu bihembwe bine bigize umwaka.",
+        "weight": 4
+      },
+
+
+
+      {
+        "id": 19,
+        "question": "Koperative ifite komite ngenzuzi igizwe n'abanyamuryango 3 batowe n'inteko rusange? ",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko ufite komite ngenzuzi",
+        "weight": 5
+      },
+      {
+        "id": 20,
+        "question": " Inama ya komite ngenzuzi iterana kangahe mu mwaka?",
+        "type": "number",
+        "dependsOn": {
+          "questionId": 19,
+          "value": "yes"
+        },
+        "scorable": true,
+        "maxScore": null,
+        "minScore": 3,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko  komite ngenzuzi iterana byibuze rimwe mu gihembwe, mu bihembwe bine bigize umwaka.",
+        "weight": 4
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "icon_path": "baseline_person_24",
+    "category": "Manda",
+    "questions": [
+      {
+        "id": 21,
+        "question": "Komite y'inama y'ubutegetsi imaze manda zingahe kubuyobozi?",
+        "type": "number",
+        "scorable": true,
+        "maxScore": 2,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko  y'inama y'ubutegetsi imaze manda zitarenze ebyiri.",
+        "weight": 5
+      },
+      {
+        "id": 22,
+        "question": " Komite ngenzuzi imaze manda Zingahe kubuyobozi?",
+        "type": "number",
+        "scorable": true,
+        "maxScore": 2,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko komite ngenzuzi imaze manda zitarenze ebyiri",
+        "weight": 5
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "icon_path": "baseline_person_24",
+    "category": "Kubika Inyandiko",
+    "questions": [
+      {"id": 23,
+        "question": "Ese koperative ifite raporo z'umwaka w'ingengo y'imari ushize?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko koperative ifite raporo yimari yumwaka ushize.",
+        "weight": 5
+      },
+      {"id": 24,
+        "question": " Ese koperative ifite raport z'ubugenzuzi z'umwaka w'ingengo y'imari ushize ?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko koperative ifite raporo zubugenzuzi bwumwaka ushize..",
+        "weight": 3
+      },
+      {"id": 25,
+        "question": "Ese Koperative ifite nyandiko zemewe n'amategeko?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko koperative ifite ibyangombwa byemewe n'amategeko.",
+        "weight": 5
+      },
+      {
+        "id": 26,
+        "question": "Muri izi nyandiko zemewe na amategeko zikurikira,koperative ifititemo zingahe?",
+        "type": "checkbox",
+        "dependsOn": {
+          "questionId": 25,
+          "value": "yes"
+        },
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": ["kopi y’Itegeko rigenga amakoperative mu Rwanda","amategeko shingiro yayo","amategeko agenga imyitwarire y’abayobozi ba koperative n’abakozi bayo","amategeko ngengamikorere"," icyemezo cy’ ubuzima gatozi","igitabo cyandikwamo abanyamuryango n’imigabane yabo"],
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko koperative ifite ibi ibyangombwa byose byemewe n'amategeko.",
+        "weight": 6
+      }
+
+    ]
+  },
+  {
+    "id": 5,
+    "icon_path": "baseline_person_24",
+    "category": "Urwego nshingwabikorwa",
+    "questions": [
+      {"id": 27,
+        "question": " Abakozi ba Koperative baba bafite amasezereno yanditse bijyanye n'amategeko ya koperative ndetse n'ay'umurimo?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko koperative ifite amasezerano yanditse yerekeye amategeko ya koperative & umurimo.",
+        "weight": 5
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "icon_path": "baseline_person_24",
+    "category": "Uburyo bw'icungamutungo",
+    "questions": [
+      {"id": 28,
+        "question": "Ese Koperative ifite uburyo bwo gucunga Umutungo?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko koperative ifite inyandiko zerekana imari.",
+        "weight": 5
+      },
+      {
+        "id": 29,
+        "question": "Ni ubuhe uburyo bukurikira bwo gucunga Umutungo Koperative ifite?",
+        "type": "checkbox",
+        "dependsOn": {
+          "questionId": 28,
+          "value": "yes"
+        },
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": ["Igitabo Cyinjizwamo Amafaranga", "Igitabo Cyandikwamo Ikawa yakiriwe ", "Igitabo Cyandikwamo Ikawa yamaganda", "Igitabo cy'imibyizi ya abakozi"],
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko koperative ifite izi nyandiko zose z’imari.",
+        "weight": 4
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "icon_path": "baseline_person_24",
+    "category": "Imari",
+    "questions": [
+      {"id": 30,
+        "question": "Mu isizeni ishize, ni igishoro kingana iki ku ijana (%) cyakoreshejwe mu kugura ibitumbwe mu bahinzi?",
+        "type": "percentage",
+        "scorable": true,
+        "maxScore": 40,
+        "minScore": 80,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Menya neza ko ijanisha ry’imari shingiro yose yakoreshejwe mu kugura cheri ku bahinzi byibuze 80%.",
+        "weight": 5
+      },
+      {"id": 31,
+        "question": "Mu isizeni ishize,Ikigereranyo cy'ikawa y'igitumbwe ku kawa ya amaganda cyanganaga gite?",
+        "type": "number",
+        "scorable": true,
+        "maxScore": 5.5,
+        "minScore": 5,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "igipimo kigomba kuba kiri hagati y' ibiro 4.9-5.5k.",
+        "weight": 5
+      }
+    ]
+  }
+]
