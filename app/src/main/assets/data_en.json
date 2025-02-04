@@ -2,7 +2,7 @@
   {
     "id": 1,
     "icon_path": "baseline_person_24",
-    "category": "Legal personality",
+    "category": "Cooperative Profile",
     "questions": [
       {
         "id": 1,
@@ -11,924 +11,491 @@
         "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": ["yes"]
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Ensure the cooperative is registered.",
+        "weight": 5
       },
       {
         "id": 2,
-        "question": "When was it registered?DD/MM/YR",
-        "type": "Date",
+        "question": "What are the full names of the cooperative president?",
+        "type": "text",
         "scorable": false,
-        "correct_answer": null,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswers": null,
+        "weight": 0
       },
       {
         "id": 3,
-        "question": "Where is the cooperative head office?",
+        "question": "What is phone number of the cooperative president?",
         "type": "text",
         "scorable": false,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswers": null,
+        "weight": 0
       },
+
       {
         "id": 4,
-        "question": "What is the coop registration number?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-      },
-      {
-        "id": 5,
-        "question": "What was the number of Initial membership?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-      },
-      {
-        "id": 6,
-        "question": "What was the number of Initial membership of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": null
-      },
-      {
-        "id": 7,
-        "question": "What was the number of Initial membership of women?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-      },
-      {
-        "id": 8,
-        "question": "What is the number of the current membership?",
-        "type": "text",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-      },
-      {
-        "id": 9,
-        "question": "What is the number of the current membership of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-      },
-      {
-        "id": 10,
-        "question": "What is the number of the current membership of women?",
+        "question": "What was the number of men in the Initial membership?",
         "type": "number",
         "scorable": false,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
       },
       {
-        "id": 11,
-        "question": "What is the name of the current cooperative president?",
-        "type": "text",
+        "id": 5,
+        "question": "What was the number of women in the Initial membership?",
+        "type": "number",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the number of women in the initial membership is at least 30% of the total members",
+        "weight": 1
+      },
+      {
+        "id": 6,
+        "question": "This gives the number of Initial membership as",
+        "type": "number",
         "scorable": false,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
       },
+
       {
-        "id": 12,
-        "question": "What are the contact details of the president",
-        "type": "text",
+        "id": 7,
+        "question": "What is the number of the men in the current membership?",
+        "type": "number",
         "scorable": false,
         "maxScore": null,
         "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
+      },
+      {
+        "id": 8,
+        "question": "What is the number of the women in the current membership?",
+        "type": "number",
+        "scorable":true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the number of women in current membership is at least 30% of the total members",
+        "weight": 1
+      },
+      {
+        "id": 9,
+        "question": "This gives the number of the total current membership as ",
+        "type": "number",
+        "scorable": true,
+        "maxScore":null,
+        "minScore":null,
         "lowerLength":null,
         "options": null,
-        "correctAnswers": null
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the current membership is greater than or equal to the initial membership.",
+        "weight": 1
       }
     ]
   },
   {
     "id": 2,
-    "icon_path": "baseline_person_24",
+    "icon_path": "user_group_1_svgrepo_com",
     "category": "Cooperative Governance",
     "questions": [
-      {"id": 13,
-        "question": "Did the cooperative convene general assembly meetings last year ?",
+      {
+        "id": 10,
+        "question": "Did you hold General Assembly meetings in March & Oct?",
         "type": "yes_no",
         "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Make sure cooperative hold General Assembly meetings in March & Oct .",
+        "weight": 5
       },
-      {"id": 14,
-        "question": "When did the meetings take place?DD/MM/YR",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 15,
-        "question": "What was the quorum during the meeting",
-        "type": "number",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 16,
-        "question": "What was the agenda of the meeting?  ",
-        "type": "text",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 17,
-        "question": "Does the cooperative have a BOD committee?",
+      {
+        "id": 11,
+        "question": "Was a financial review presented in the March meeting?",
         "type": "yes_no",
         "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Ensure a financial review is presented in the March meeting.",
+        "weight": 5
       },
-      {"id": 18,
-        "question": "How many members does the BOD Committee have?",
+      {
+        "id": 12,
+        "question": "Are there records & minutes kept of all the cooperative meetings that are held?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Ensure minutes & records of all meeting are kept.",
+        "weight": 5
+      },
+      {
+        "id": 13,
+        "question": "Does the cooperative have a Board of Directors committee?",
+        "type": "yes_no",
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "The cooperative must have a Board of Directors.",
+        "weight": 5
+      },
+      {
+        "id": 14,
+        "question": "How many male members does the Board of Directors Committee have?",
         "type": "number",
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
         "scorable": false,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
       },
-      {"id": 19,
-        "question": "How many members does the BOD Committee have of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 20,
-        "question": "How many members does the BOD Committee have of women?",
+      {
+        "id": 15,
+        "question": "How many female members does  Board of Directors Committee have?",
         "type": "number",
+
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
         "scorable": false,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 0
       },
-      {"id": 21,
-        "question": "What percentage of the BOD members are Women?",
-        "type": "text",
+      {
+        "id": 16,
+        "question": "This give the total of the Board of Directors Committee as",
+        "type": "number",
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
+        "scorable": true,
+        "maxScore": null,
+        "minScore": 5,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Make sure the Board of Directors committee number is greater than or equal to 5 and it must always be an odd number ",
+        "weight": 4
+      },
+      {
+        "id": 17,
+        "question": "This gives percentage of the Women in Board of Directors members as",
+        "type": "percentage",
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
         "scorable": true,
         "maxScore": null,
         "minScore": 30,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the number of women in the Board of Directors are at least 30% of the total members",
+        "weight": 1
       },
-      {"id": 22,
-        "question": "How often does the BOD Committee meet",
+      {
+        "id": 18,
+        "question": "how many times has the Board of Directors met so far this year ?",
+
         "type": "number",
+        "dependsOn": {
+          "questionId": 13,
+          "value": "yes"
+        },
         "scorable": true,
         "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
+        "minScore": 4,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the committee meets at least once in each quarter of this year.",
+        "weight": 4
       },
-      {"id": 23,
-        "question": "What are the names/contacts of the BOD Members?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
 
-      },
-      {"id": 24,
-        "question": "Does the cooperative have a Supervisory Committee?",
+
+
+      {
+        "id": 19,
+        "question": "Does the cooperative have a Supervisory Committee with 3 members who were elected by the General Assembly? ",
         "type": "yes_no",
         "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Ensure  cooperative has a supervisory committee.",
+        "weight": 5
       },
-      {"id": 25,
-        "question": "How many members does the supervisory committee have?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": null
-
-      },
-      {"id": 26,
-        "question": "How many members does the supervisory committee have of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 27,
-        "question": "How many members does the supervisory committee have of women?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-
-      {"id": 28,
-        "question": "How often does the supervisory committee meet?",
+      {
+        "id": 20,
+        "question": "how many times has the Supervisory Committee met so far this year?",
         "type": "number",
+        "dependsOn": {
+          "questionId": 19,
+          "value": "yes"
+        },
         "scorable": true,
         "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
+        "minScore": 3,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 29,
-        "question": "What are the names/contacts of the Supervisory ?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the supervisory committee meets at least once in each quarter of this year.",
+        "weight": 4
       }
-
-
     ]
   },
   {
     "id": 3,
-    "icon_path": "baseline_person_24",
-    "category": "Terms Office",
+    "icon_path": "service_contract_svgrepo_com",
+    "category": "Terms of Office",
     "questions": [
-      {"id": 13,
-        "question": "Did the cooperative convene general assembly meetings last year ?",
-        "type": "yes_no",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": ["yes"]
-
-      },
-      {"id": 14,
-        "question": "When did the meetings take place?DD/MM/YR",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 15,
-        "question": "What was the quorum during the meeting",
+      {
+        "id": 21,
+        "question": "How many 5 year terms has the Board of Directors Committee been in office?",
         "type": "number",
         "scorable": true,
-        "maxScore": null,
+        "maxScore": 2,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the Board of Directors committee sits for maximum of 2 terms in Office.",
+        "weight": 5
       },
-      {"id": 16,
-        "question": "What was the agenda of the meeting?  ",
-        "type": "text",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 17,
-        "question": "Does the cooperative have a BOD committee?",
-        "type": "yes_no",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": ["yes"]
-
-      },
-      {"id": 18,
-        "question": "How many members does the BOD Committee have?",
-        "type": "number",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 19,
-        "question": "How many members does the BOD Committee have of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 20,
-        "question": "How many members does the BOD Committee have of women?",
-        "type": "number",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 21,
-        "question": "What percentage of the BOD members are Women?",
-        "type": "text",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": 30,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 22,
-        "question": "How often does the BOD Committee meet",
+      {
+        "id": 22,
+        "question": "How many 4 years terms has the Supervisory Committee Committee been in office?",
         "type": "number",
         "scorable": true,
-        "maxScore": null,
+        "maxScore": 2,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the Supervisory Committee sit for maximum of 2 terms in Office.",
+        "weight": 5
       },
       {"id": 23,
-        "question": "What are the names/contacts of the BOD Members?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 24,
-        "question": "Does the cooperative have a Supervisory Committee?",
+        "question": "Do the cooperative employees have written contracts in accordance with cooperative & Labour laws?",
         "type": "yes_no",
         "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": ["yes"]
-
-      },
-      {"id": 25,
-        "question": "How many members does the supervisory committee have?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": null
-
-      },
-      {"id": 26,
-        "question": "How many members does the supervisory committee have of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 27,
-        "question": "How many members does the supervisory committee have of women?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-
-      {"id": 28,
-        "question": "How often does the supervisory committee meet?",
-        "type": "number",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 29,
-        "question": "What are the names/contacts of the Supervisory ?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Ensure the cooperative has written contracts regarding to the cooperative & Labour laws.",
+        "weight": 5
       }
-
-
     ]
   },
   {
     "id": 4,
-    "icon_path": "baseline_person_24",
-    "category": "Meeting",
+    "icon_path": "record_svgrepo_com__2_",
+    "category": "Record Keeping",
     "questions": [
-      {"id": 13,
-        "question": "Did the cooperative convene general assembly meetings last year ?",
-        "type": "yes_no",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": ["yes"]
-
-      },
-      {"id": 14,
-        "question": "When did the meetings take place?DD/MM/YR",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 15,
-        "question": "What was the quorum during the meeting",
-        "type": "number",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 16,
-        "question": "What was the agenda of the meeting?  ",
-        "type": "text",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 17,
-        "question": "Does the cooperative have a BOD committee?",
-        "type": "yes_no",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": ["yes"]
-
-      },
-      {"id": 18,
-        "question": "How many members does the BOD Committee have?",
-        "type": "number",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 19,
-        "question": "How many members does the BOD Committee have of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 20,
-        "question": "How many members does the BOD Committee have of women?",
-        "type": "number",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 21,
-        "question": "What percentage of the BOD members are Women?",
-        "type": "text",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": 30,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 22,
-        "question": "How often does the BOD Committee meet",
-        "type": "number",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 23,
-        "question": "What are the names/contacts of the BOD Members?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
       {"id": 24,
-        "question": "Does the cooperative have a Supervisory Committee?",
+        "question": "Does the cooperative have financial reports for the last year?",
         "type": "yes_no",
         "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": ["yes"]
-
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Make sure the cooperative has financial reports for the last year.",
+        "weight": 5
       },
       {"id": 25,
-        "question": "How many members does the supervisory committee have?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": null
-
-      },
-      {"id": 26,
-        "question": "How many members does the supervisory committee have of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 27,
-        "question": "How many members does the supervisory committee have of women?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-
-      {"id": 28,
-        "question": "How often does the supervisory committee meet?",
-        "type": "number",
+        "question": "Does the cooperative have external audit reports for the last year?",
+        "type": "yes_no",
         "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": "Make sure the cooperative has external audit reports for the last year.",
+        "weight": 3
       },
-      {"id": 29,
-        "question": "What are the names/contacts of the Supervisory ?",
-        "type": "text",
-        "scorable": false,
+      {"id": 26,
+        "question": " Does the cooperative have its legal documents?",
+        "type": "yes_no",
+        "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
-
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 5
+      },
+      {
+        "id": 27,
+        "question": "which of these legal documents does the cooperative have?",
+        "type": "checkbox",
+        "dependsOn": {
+          "questionId": 26,
+          "value": "yes"
+        },
+        "scorable": true,
+        "maxScore": null,
+        "minScore": null,
+        "lowerLength": null,
+        "options": ["a copy of the Law governing cooperatives in Rwanda","its bylaws","the code of conduct for leaders and staff of the cooperative","internal rules and regulations","a certificate of legal personality","a register of members and their shares"],
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the cooperative has all the legal documents listed in the cooperative regulations.",
+        "weight": 6
       }
-
 
     ]
   },
+
   {
     "id": 5,
-    "icon_path": "baseline_person_24",
-    "category": "Record Keeping",
+    "icon_path": "financial_business_finance_banking_saving_money_economy_svgrepo_com",
+    "category": "Financial",
     "questions": [
-      {"id": 13,
-        "question": "Did the cooperative convene general assembly meetings last year ?",
-        "type": "yes_no",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": ["yes"]
-
-      },
-      {"id": 14,
-        "question": "When did the meetings take place?DD/MM/YR",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 15,
-        "question": "What was the quorum during the meeting",
-        "type": "number",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 16,
-        "question": "What was the agenda of the meeting?  ",
-        "type": "text",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 17,
-        "question": "Does the cooperative have a BOD committee?",
-        "type": "yes_no",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": ["yes"]
-
-      },
-      {"id": 18,
-        "question": "How many members does the BOD Committee have?",
-        "type": "number",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 19,
-        "question": "How many members does the BOD Committee have of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 20,
-        "question": "How many members does the BOD Committee have of women?",
-        "type": "number",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 21,
-        "question": "What percentage of the BOD members are Women?",
-        "type": "text",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": 30,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 22,
-        "question": "How often does the BOD Committee meet",
-        "type": "number",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 23,
-        "question": "What are the names/contacts of the BOD Members?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 24,
-        "question": "Does the cooperative have a Supervisory Committee?",
-        "type": "yes_no",
-        "scorable": true,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": ["yes"]
-
-      },
-      {"id": 25,
-        "question": "How many members does the supervisory committee have?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": null
-
-      },
-      {"id": 26,
-        "question": "How many members does the supervisory committee have of men?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-      {"id": 27,
-        "question": "How many members does the supervisory committee have of women?",
-        "type": "text",
-        "scorable": false,
-        "maxScore": null,
-        "minScore": null,
-        "lowerLength":null,
-        "options": null,
-        "correctAnswers": []
-
-      },
-
       {"id": 28,
-        "question": "How often does the supervisory committee meet?",
-        "type": "number",
+        "question": "Does the cooperative have financial records in place?",
+        "type": "yes_no",
         "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
+        "correctAnswer": "yes",
+        "correctAnswers": null,
+        "recommendation": null,
+        "weight": 5
       },
-      {"id": 29,
-        "question": "What are the names/contacts of the Supervisory ?",
-        "type": "text",
-        "scorable": false,
+      {
+        "id": 29,
+        "question": "Which of these financial records do you have?",
+        "type": "checkbox",
+        "dependsOn": {
+          "questionId": 28,
+          "value": "yes"
+        },
+        "scorable": true,
         "maxScore": null,
         "minScore": null,
-        "lowerLength":null,
+        "lowerLength": null,
+        "options": ["Cashbook", "Cherry book/ cherry collection payment ", "Parchment book", "Labour record book"],
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the cooperative has financial records (cherry collection,parchment,cash and labour record books.)",
+        "weight": 4
+      },
+      {"id": 30,
+        "question": "What percentage of the total working capital was used to purchase cherry from farmers in the most recent season?",
+        "type": "percentage",
+        "scorable": true,
+        "maxScore": 40,
+        "minScore": 80,
+        "lowerLength": null,
         "options": null,
-        "correctAnswers": []
-
-
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the percentage of the total working capital that was used to purchase cherry from farmers is at least 80%.",
+        "weight": 5
+      },
+      {"id": 31,
+        "question": "What was the ratio of cherry to parchment in the most recent coffee season?(How many Kgs of coffee cherries producing 1kg of parchments)",
+        "type": "number",
+        "scorable": true,
+        "maxScore": 5.5,
+        "minScore": 4.9,
+        "lowerLength": null,
+        "options": null,
+        "correctAnswer": null,
+        "correctAnswers": null,
+        "recommendation": "Ensure the cherry to parchment ratio is between 4.9 and 5.5  .",
+        "weight": 5
       }
-
-
     ]
   }
 ]

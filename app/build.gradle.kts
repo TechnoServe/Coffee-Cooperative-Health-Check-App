@@ -1,18 +1,24 @@
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
+
+
 }
 
 android {
-    namespace = "com.example.ccts"
+    namespace = "com.technoserve.cooptrac"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.ccts"
+        applicationId = "com.technoserve.cooptrac"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 20
+        versionName = "6.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -22,7 +28,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -35,6 +41,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += "-Xopt-in=kotlin.contracts.ExperimentalContracts"
     }
     buildFeatures {
         compose = true
@@ -44,7 +51,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
         }
     }
 }
@@ -61,10 +68,20 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.androidx.navigation.compose)
+    implementation("com.opencsv:opencsv:5.6")
+    implementation ("androidx.activity:activity-ktx:1.7.0")
+    implementation ("androidx.activity:activity:1.7.0")
     implementation ("com.google.code.gson:gson:2.8.2")
     implementation ("androidx.compose.runtime:runtime-livedata:1.2.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation ("com.google.dagger:hilt-android:2.44")
+    implementation ("androidx.compose.ui:ui:1.4.0")
+    implementation ("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.compose.foundation:foundation-layout:1.0.5")
+
+    kapt ("com.google.dagger:hilt-compiler:2.44")
+    implementation(libs.identity.jvm)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,4 +89,25 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Extensions = ViewModel + LiveData
+    val roomVersion = "2.6.1"
+
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    kapt("androidx.room:room-compiler:$roomVersion")
+
+    implementation("androidx.room:room-ktx:$roomVersion")
+
+    implementation("androidx.room:room-rxjava2:$roomVersion")
+
+    implementation("androidx.room:room-rxjava3:$roomVersion")
+
+    implementation("androidx.room:room-guava:$roomVersion")
+
+    testImplementation("androidx.room:room-testing:$roomVersion")
+
+    implementation("androidx.room:room-paging:$roomVersion")
+
+
 }
